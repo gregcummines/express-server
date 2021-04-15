@@ -1,10 +1,10 @@
-# Express Server
+# Walrus
 
-This project demonstrates a simple express server REST API with an Angular front end. I am creating this for the Raspberry Pi. 
+This project is a controller for a hydroponics growing system using Raspberry Pi.  
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+This project uses Angular for the front-end and Node.js and Express on the back-end for REST API.
 
 ## Getting Started
 
