@@ -46,6 +46,20 @@ app.use((req, res, next) => {
 
 app.use('/pins', pinsRouter);
 
+function getRoot(request, response) {
+  response.sendFile(path.resolve('../app/dist/automation/index.html'));
+}
+
+function getUndefined(request, response) {
+  response.sendFile(path.resolve('../app/dist/automation/index.html'));
+}
+
+// Note the dot at the beginning of the path
+app.use(express.static('../app/dist/automation'));
+
+app.get('/', getRoot);
+app.get('/*', getUndefined);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
