@@ -29,7 +29,7 @@ api> nodemon npm start
 When the webserver starts you can navigate to http://localhost:3000 at which point the express web server will serve up the Angular index.html file from the Angular app/dist/automation/ folder along with the other application files referenced by index.html. 
 
 ## Issue
-Although the index.html is served up and its file are all served up (main.js, styles.css, etc.), the home page component is shown which has an image referencing /assets/images/walrus.jpg. This image is being returned as a plaintext file. Figure this out and I owe you a beer. 
+https://placehold.it/150/ffffff/ff0000?text=Although the index.html is served up and its file are all served up (main.js, styles.css, etc.), the home page component is shown which has an image referencing /assets/images/walrus.jpg. This image is being returned as a plaintext file. Figure this out and I owe you a beer. 
 
 # Walrus Angular project (under app folder)
 
