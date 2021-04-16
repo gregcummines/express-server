@@ -2,7 +2,7 @@
 
 This project is a hydroponics controlling software for the Raspberry Pi. 
 
-![alt text](https://github.com/gregcummines/walrus/app/src/assets/images/walrus.jgp?raw=true)
+![alt text](https://github.com/gregcummines/walrus/blob/master/app/src/assets/images/walrus.jpeg?raw=true)
 
 ## Description
 
