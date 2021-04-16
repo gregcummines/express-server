@@ -1,48 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const config = require('./config');
-//const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
-
-var pinsRouter = require('./routes/pins');
-
-var app = express();
-
-/* console.log("Connecting to MongoDB...");
-
-MongoClient.connect(`mongodb://${config.dbHost}`, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(client => {
-    const db =  client.db(config.dbName);
-    const collection = db.collection(config.dbCollection);
-    app.locals[config.dbCollection] = collection;
-    console.log(app.locals[config.dbCollection]);
-  })
-  .catch(error => console.error(error)); 
- */
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+const pinsRouter = require('./routes/pins');
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
-
-/* app.use((req, res, next) => {
-  const collection = req.app.locals[config.dbCollection];
-  console.log(collection);
-  req.collection = collection;
-  next();
-}); */
 
 app.use('/pins', pinsRouter);
 
