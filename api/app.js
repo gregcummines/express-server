@@ -5,14 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 const config = require('./config');
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
 
 var pinsRouter = require('./routes/pins');
 
 var app = express();
 
-console.log("Connecting to MongoDB...");
+/* console.log("Connecting to MongoDB...");
 
 MongoClient.connect(`mongodb://${config.dbHost}`, {
   useNewUrlParser: true,
@@ -25,7 +25,7 @@ MongoClient.connect(`mongodb://${config.dbHost}`, {
     console.log(app.locals[config.dbCollection]);
   })
   .catch(error => console.error(error)); 
-
+ */
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -37,12 +37,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   const collection = req.app.locals[config.dbCollection];
   console.log(collection);
   req.collection = collection;
   next();
-});
+}); */
 
 app.use('/pins', pinsRouter);
 
@@ -55,7 +55,7 @@ function getUndefined(request, response) {
 }
 
 // Note the dot at the beginning of the path
-app.use(express.static('../app/dist/automation'));
+//app.use(express.static(process.cwd()+'../app/dist/automation'));
 
 app.get('/', getRoot);
 app.get('/*', getUndefined);
