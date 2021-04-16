@@ -56,7 +56,6 @@ function getUndefined(request, response) {
 
 // Note the dot at the beginning of the path
 app.use(express.static(process.cwd()+'../app/dist/automation'));
-app.use('/assets', express.static(express.static(process.cwd()+'../app/dist/automation/assets')));
 
 app.get('/', getRoot);
 app.get('/*', getUndefined);
