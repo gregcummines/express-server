@@ -4,9 +4,11 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": [
-      "hammerjs"
+      "hammerjs",
+      "gapi.auth2"
     ]
   },
+  "strictPropertyInitialization": false,
   "files": [
     "src/main.ts",
     "src/polyfills.ts"
