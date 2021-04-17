@@ -14,6 +14,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+app.set('view engine', 'html');
+
 app.use('/pins', pinsRouter);
 
 function getRoot(request, response) {
