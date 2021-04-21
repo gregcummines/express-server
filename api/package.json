@@ -13,6 +13,8 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "mongodb": "^3.6.6",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "raspi-1wire-temp": "^2.0.0",
+    "rpio": "^2.4.2"
   }
 }

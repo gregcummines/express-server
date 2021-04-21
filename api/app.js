@@ -3,18 +3,27 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const config = require('./config');
-const cors = require('cors');
-const pinsRouter = require('./routes/pins');
-const app = express();
 
+const cors = require('cors');
+const app = express();
+const controller = require('./controller.js');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+const pinsRouter = require('./routes/pins');
+const commandCenterRouter = require('./routes/command-center');
+
+
+try {
+  console.log(controller.getTemp());
+} catch (error) {
+  console.error(error);
+}
 
 app.use('/pins', pinsRouter);
+app.use('/command-center', commandCenterRouter);
 
 function getRoot(request, response) {
   response.sendFile(path.resolve('../app/dist/automation/index.html'));
