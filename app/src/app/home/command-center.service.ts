@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
   })
   export class CommandCenterService {
-    private baseUrl = '/api/command-center';
+    private baseUrl = 'http://192.168.0.188:3000/command-center';
 
     constructor(private http: HttpClient) { }  
     
