@@ -15,13 +15,6 @@ app.use(cors());
 const pinsRouter = require('./routes/pins');
 const commandCenterRouter = require('./routes/command-center');
 
-
-try {
-  console.log(controller.getTemp());
-} catch (error) {
-  console.error(error);
-}
-
 app.use('/pins', pinsRouter);
 app.use('/command-center', commandCenterRouter);
 
