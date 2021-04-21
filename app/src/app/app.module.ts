@@ -7,10 +7,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { AngularMaterialModule } from './angular-material.module';
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-import {
-  GoogleLoginProvider
-} from 'angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -23,24 +19,9 @@ import {
     BrowserAnimationsModule,
     AngularMaterialModule,
     HttpClientModule,
-    FormsModule,
-    SocialLoginModule
+    FormsModule
   ],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '410927412971-qr2cseln2l19104b92ud1mrujnsqnbjs.apps.googleusercontent.com'
-            )
-          }
-        ]
-      } as SocialAuthServiceConfig,
-    }
   ],
   bootstrap: [AppComponent]
 })

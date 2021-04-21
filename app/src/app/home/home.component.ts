@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommandCenterService } from './command-center.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private commandCenterService: CommandCenterService) { }
+  public temp: number;
+  public error: string;
   ngOnInit(): void {
+    this.commandCenterService.getTemp().subscribe(
+      data => {
+        this.temp = data;
+      },
+      error => {
+        this.error = error;
+      });
   }
 
+  
 }
