@@ -1,6 +1,7 @@
 const rpio = require('rpio');
 const r1wt = require('raspi-1wire-temp');
 const devices = r1wt.findDevices();
+console.log(devices);
 
 function getTemp() {
     let temp = 0.0;
