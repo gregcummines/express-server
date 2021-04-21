@@ -3,7 +3,7 @@ var router = express.Router();
 var controller = require('../controller');
 
 router.get('/get-temp', (req, res, next) => {
-  res.send(controller.getTemp());
+  res.json(controller.getTemp());
 });
 
 module.exports = router;
