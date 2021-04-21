@@ -1,3 +1,5 @@
-<div *ngIf="error" class="background-color: 0xFF0080">{{error}}</div>
+<mat-toolbar *ngIf="error" color="warn">
+    <span>{{error}}</span>
+</mat-toolbar>
 <img src="/assets/images/walrus.jpeg" />
 <p>{{temp}}</p>
