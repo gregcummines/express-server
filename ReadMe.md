@@ -2,36 +2,36 @@
 
 This project is a hydroponics controlling software for the Raspberry Pi. 
 
-![alt text](https://github.com/gregcummines/walrus/blob/master/app/src/assets/images/walrus.jpeg?raw=true)
+![alt text](https://github.com/gregcummines/walrus/blob/master/client/src/assets/images/walrus.jpeg?raw=true)
 
 ## Description
 
-This project has 2 folders, app and api.
-app - Angular front end application
-api - Backend Nodejs express web server that serves up the Angular app and services api calls from the Angular front end.
+This project has 2 folders, client and server.
+client - Angular front end application
+server - Backend Nodejs express web server that serves up the Angular app and services server calls from the Angular front end.
 
 ## Getting Started
 
-To start, we need to build the Angular application first, so while in the app folder do the following:
+To start, we need to build the Angular application first, so while in the client folder do the following:
 ```
-app> npm install
-app> npm install -g @angular/cli
-app> ng build
-```
-
-Next, navigate to the api folder and start the express web server:
-```
-api> npm install
-api> npm install -g nodemon
-api> nodemon npm start
+client> npm install
+client> npm install -g @angular/cli
+client> ng build
 ```
 
-When the webserver starts you can navigate to http://localhost:3000 at which point the express web server will serve up the Angular index.html file from the Angular app/dist/automation/ folder along with the other application files referenced by index.html. 
+Next, navigate to the server folder and start the express web server:
+```
+server> npm install
+server> npm install -g nodemon
+server> nodemon npm start
+```
+
+When the webserver starts you can navigate to http://localhost:3000 at which point the express web server will serve up the Angular index.html file from the Angular client/dist/automation/ folder along with the other application files referenced by index.html. 
 
 ## Issue
 Although the index.html is served up and its file are all served up (main.js, styles.css, etc.), the home page component is shown which has an image referencing /assets/images/walrus.jpg. This image is being returned as a plaintext file. Figure this out and I owe you a beer. 
 
-# Walrus Angular project (under app folder)
+# Walrus Angular project (under client folder)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.9. All of the remaining information is related to the Angular app running in its own web server using ng serve.
 
