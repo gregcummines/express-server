@@ -1,16 +1,11 @@
-import * as express from 'express';
-
 const createError = require('http-errors');
+const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const app = express();
+
 const cors = require('cors');
-const WebSocket = require('ws');
-
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-
+const app = express();
 const controller = require('./controller.js');
 app.use(logger('dev'));
 app.use(express.json());
@@ -22,8 +17,6 @@ const commandCenterRouter = require('./routes/command-center');
 
 app.use('/pins', pinsRouter);
 app.use('/command-center', commandCenterRouter);
-
-
 
 function getRoot(request, response) {
   response.sendFile(path.resolve('../app/dist/automation/index.html'));
