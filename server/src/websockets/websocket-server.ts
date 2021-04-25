@@ -56,7 +56,7 @@ export class WebSocketServer {
         setInterval(() => {
             console.log('sending temp');
             ws.send(this.createMessage(readAllF(1)[0].t.toString()));
-        }, 1000);
+        }, 10000);
         
         ws.on('error', (err) => {
             console.warn(`Client disconnected - reason: ${err}`);
