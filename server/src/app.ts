@@ -36,7 +36,7 @@ class App {
   private initializeMiddlewares() {
     this.app.use(express.json());
     this.app.use(cors());
-    const angularDistPath: string = '../client/dist';
+    const angularDistPath: string = '../client/dist/automation';
     this.app.use(express.static(`${angularDistPath}`));
     const angularAppPath = path.resolve(`${angularDistPath}/index.html`);
     // If the request was on the root path, send the Angular app back
