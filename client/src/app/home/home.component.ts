@@ -24,22 +24,23 @@ export class HomeComponent implements OnInit {
         .subscribe(
           (message) => {
             console.log(`Message received: ${message}`);
+            this.temp = message.content;
           },
           (err) => console.error(err),
           () => console.warn('Completed!')
         );
   }
-  public temp: number;
+  public temp: string;
   public error: string;
   private socket$: WebSocketSubject<Message>;
 
   ngOnInit(): void {
-    this.commandCenterService.getTemp().subscribe(
-      data => {
-        this.temp = data;
-      },
-      error => {
-        this.error = error;
-      });
+    // this.commandCenterService.getTemp().subscribe(
+    //   data => {
+    //     this.temp = data;
+    //   },
+    //   error => {
+    //     this.error = error;
+    //   });
   }
 }
