@@ -1,7 +1,7 @@
 import {singleton} from "tsyringe";
 import * as WebSocket from 'ws';
 import { Message } from './message';
-import { readSimpleF } from "ds18b20-raspi-typescript";
+import { readAllF } from "ds18b20-raspi-typescript";
 
 interface ExtWebSocket extends WebSocket {
     isAlive: boolean;
@@ -52,7 +52,7 @@ export class WebSocketServer {
         });
     
         //send immediatly a feedback to the incoming connection    
-        ws.send(this.createMessage(readSimpleF(3).toString()));
+        ws.send(this.createMessage(readAllF(3)[0].toString()));
     
         ws.on('error', (err) => {
             console.warn(`Client disconnected - reason: ${err}`);
