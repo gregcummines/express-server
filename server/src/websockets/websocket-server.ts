@@ -51,8 +51,10 @@ export class WebSocketServer {
     
         });
     
-        //send immediatly a feedback to the incoming connection    
+        //send immediatly a feedback to the incoming connection and every interval thereafter  
+        ws.send(this.createMessage(readAllF(1)[0].t.toString())); 
         setInterval(() => {
+            console.log('sending temp');
             ws.send(this.createMessage(readAllF(1)[0].t.toString()));
         }, 1000);
         
