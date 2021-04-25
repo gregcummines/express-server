@@ -23,7 +23,7 @@ Next, navigate to the server folder and start the express web server:
 ```
 server> npm install
 server> npm install -g nodemon
-server> nodemon npm start
+server> npm start dev
 ```
 
 When the webserver starts you can navigate to http://localhost:3000 at which point the express web server will serve up the Angular index.html file from the Angular client/dist/automation/ folder along with the other application files referenced by index.html. 
