@@ -6,6 +6,7 @@ import {container} from "tsyringe";
 import {WebSocketServer} from "./websockets/websocket-server";
 import * as WebSocket from 'ws';
 import * as http from 'http';
+import * as cors from 'cors';
 
 class App {
   public app: express.Application;
@@ -33,6 +34,7 @@ class App {
  
   private initializeMiddlewares() {
     this.app.use(express.json());
+    this.app.use(cors());
   }
  
   private initializeErrorHandling() {
