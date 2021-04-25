@@ -7,6 +7,7 @@ import {WebSocketServer} from "./websockets/websocket-server";
 import * as WebSocket from 'ws';
 import * as http from 'http';
 import * as cors from 'cors';
+import * as path from 'path';
 
 class App {
   public app: express.Application;
@@ -35,6 +36,12 @@ class App {
   private initializeMiddlewares() {
     this.app.use(express.json());
     this.app.use(cors());
+    const angularDistPath: string = '../client/dist';
+    this.app.use(express.static(`${angularDistPath}`));
+    const angularAppPath = path.resolve(`${angularDistPath}/index.html`);
+    // If the request was on the root path, send the Angular app back
+    this.app.get('/', (req: express.Request, res: express.Response) => { res.sendFile(angularAppPath)});
+    this.app.get('/*', (req: express.Request, res: express.Response) => { res.sendFile(angularAppPath)});
   }
  
   private initializeErrorHandling() {
