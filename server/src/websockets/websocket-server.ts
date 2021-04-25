@@ -34,27 +34,27 @@ export class WebSocketServer {
         });
     
         //connection is up, let's add a simple simple event
-        ws.on('message', (msg: string) => {
+        // ws.on('message', (msg: string) => {
     
-            const message = JSON.parse(msg) as Message;
-            console.log(message);
-            setTimeout(() => {
-                if (message.isBroadcast) {
-                    //send back the message to the other clients
-                    this.wss.clients
-                        .forEach(client => {
-                            if (client != ws) {
-                                client.send(this.createMessage(message.content, true, message.sender));
-                            }
-                        });
+        //     const message = JSON.parse(msg) as Message;
+        //     console.log(message);
+        //     setTimeout(() => {
+        //         if (message.isBroadcast) {
+        //             //send back the message to the other clients
+        //             this.wss.clients
+        //                 .forEach(client => {
+        //                     if (client != ws) {
+        //                         client.send(this.createMessage(message.content, true, message.sender));
+        //                     }
+        //                 });
     
-                }
+        //         }
     
-                ws.send(this.createMessage(`You sent -> ${message.content}`, message.isBroadcast));
+        //         ws.send(this.createMessage(`You sent -> ${message.content}`, message.isBroadcast));
     
-            }, 1000);
+        //     }, 1000);
     
-        });
+        // });
     
         //send immediatly a feedback to the incoming connection and every interval thereafter  
         ws.send(this.createMessage(readAllF(1)[0].t.toString())); 
