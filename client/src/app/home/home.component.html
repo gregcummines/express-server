@@ -2,7 +2,7 @@
     <span>{{error | json}}</span>
 </mat-toolbar>
 <mat-toolbar *ngIf="!error" color="accent">
-    <span>{{temp}} F</span>
+    <span *ngIf="temp">{{temp}} F</span>
 </mat-toolbar>
 <img src="/assets/images/walrus.jpeg" />
 
