@@ -2,6 +2,7 @@ import {singleton} from "tsyringe";
 import * as WebSocket from 'ws';
 import { Message } from './message';
 import { readAllF } from "ds18b20-raspi-typescript";
+import { IncomingMessage } from "node:http";
 
 interface ExtWebSocket extends WebSocket {
     isAlive: boolean;
@@ -18,7 +19,11 @@ export class WebSocketServer {
     console.log("Setting up websocket server...");
     this.wss = wss;
 
-    this.wss.on('connection', (ws: WebSocket) => {
+    this.wss.on('connection', (ws: WebSocket, req: IncomingMessage) => {
+
+        const ip = req.socket.remoteAddress;
+        console.log(`${ip} has connected...`);
+
 
         const extWs = ws as ExtWebSocket;
     
@@ -54,8 +59,10 @@ export class WebSocketServer {
         //send immediatly a feedback to the incoming connection and every interval thereafter  
         ws.send(this.createMessage(readAllF(1)[0].t.toString())); 
         setInterval(() => {
-            console.log('sending temp');
-            ws.send(this.createMessage(readAllF(1)[0].t.toString()));
+            this.wss.clients
+                .forEach(client => {
+                    client.send(this.createMessage(readAllF(1)[0].t.toString()));
+                });
         }, 10000);
         
         ws.on('error', (err) => {
