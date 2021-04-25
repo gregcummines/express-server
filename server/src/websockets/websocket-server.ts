@@ -52,7 +52,7 @@ export class WebSocketServer {
         });
     
         //send immediatly a feedback to the incoming connection    
-        ws.send(this.createMessage(readAllF(3)[0].toString()));
+        ws.send(this.createMessage(readAllF(3)[0].t.toString()));
     
         ws.on('error', (err) => {
             console.warn(`Client disconnected - reason: ${err}`);
