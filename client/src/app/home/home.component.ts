@@ -18,7 +18,7 @@ export class Message {
 export class HomeComponent implements OnInit {
 
   constructor(private commandCenterService: CommandCenterService) { 
-    this.socket$ = new WebSocketSubject('ws://192.168.0.188:5002');
+    this.socket$ = new WebSocketSubject('ws://192.168.0.188:3002');
 
     this.socket$
         .subscribe(
