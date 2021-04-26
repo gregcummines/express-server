@@ -3,6 +3,6 @@ export class SensorMessage {
         public sensor: string,
         public sensorType: string,
         public content: string,
-        public lastUpdated: string
+        public lastUpdated: Date
      ) { }
   }

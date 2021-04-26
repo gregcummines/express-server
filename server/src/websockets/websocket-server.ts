@@ -62,7 +62,7 @@ export class WebSocketServer {
     let sensorMessages: SensorMessage[] = []; 
     let tempSensors = readAllF(1);
     tempSensors.forEach( (sensor) => {
-        sensorMessages.push(new SensorMessage(sensor.id, "temp", `${sensor.t.toString()}F`, new Date().toLocaleString()));
+        sensorMessages.push(new SensorMessage(sensor.id, "temp", `${sensor.t.toString()}F`, new Date()));
     });
     return JSON.stringify(sensorMessages);
   }

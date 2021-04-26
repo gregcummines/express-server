@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { AngularMaterialModule } from './angular-material.module';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,12 @@ import { AngularMaterialModule } from './angular-material.module';
     BrowserAnimationsModule,
     AngularMaterialModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MomentModule.forRoot({
+      relativeTimeThresholdOptions: {
+        's': 59
+      }
+    })
   ],
   providers: [
   ],
