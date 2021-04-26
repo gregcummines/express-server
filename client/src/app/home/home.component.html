@@ -3,7 +3,7 @@
 </mat-toolbar>
 <mat-toolbar *ngIf="!error" color="accent">
     <mat-toolbar-row *ngFor="let sensor of sensors">
-        <span>{{sensor.sensor}} {{sensor.content}}</span>
+        <span>{{sensor.sensor}} | {{sensor.sensorType}} | {{sensor.content}}</span>
     </mat-toolbar-row>
 </mat-toolbar>
 <img src="/assets/images/walrus.jpeg" />
