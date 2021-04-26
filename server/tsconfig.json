@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "target": "es2017",
+    "target": "es2015",
     "outDir": "./dist/server",
     "baseUrl": "./src",
     "moduleResolution": "Node",
