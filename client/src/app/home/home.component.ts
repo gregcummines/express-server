@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommandCenterService } from './command-center.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
-
-export class Message {
-  constructor(
-      public sender: string,
-      public content: string,
-      public isBroadcast = false,
-  ) { }
-}
+import { SensorMessage } from './sensor-message';
 
 @Component({
   selector: 'app-home',
@@ -22,15 +15,14 @@ export class HomeComponent implements OnInit {
 
     this.socket$
         .subscribe(
-          (message) => {
-            console.log(`Message received: ${message}`);
-            this.temp = message.content;
+          (data) => {
+            this.sensors = data;
           },
           (err) => console.error(err),
           () => console.warn('Completed!')
         );
   }
-  public temp: string;
+  public sensors: SensorMessage[] = [];
   public error: string;
   private socket$: WebSocketSubject<Message>;
 

@@ -2,7 +2,9 @@
     <span>{{error | json}}</span>
 </mat-toolbar>
 <mat-toolbar *ngIf="!error" color="accent">
-    <span *ngIf="temp">{{temp}} F</span>
+    <mat-toolbar-row *ngFor="let sensor of sensors">
+        <span>{{sensor.sensor}} {{sensor.content}}</span>
+    </mat-toolbar-row>
 </mat-toolbar>
 <img src="/assets/images/walrus.jpeg" />
 
