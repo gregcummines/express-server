@@ -58,16 +58,12 @@ export class WebSocketServer {
     }, 10000);
   }
 
-  createMessage(sensor: string, content: string): string {
-    return JSON.stringify(new SensorMessage(sensor, content));
-  }
-
-  getSensorStatuses(): SensorMessage[] {
+  getSensorStatuses(): string {
     let sensorMessages: SensorMessage[] = []; 
     let tempSensors = readAllF(1);
     tempSensors.forEach( (sensor) => {
         sensorMessages.push(new SensorMessage(sensor.id, sensor.t.toString()));
     });
-    return sensorMessages;
+    return JSON.stringify(sensorMessages);
   }
 }
