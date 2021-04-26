@@ -2,6 +2,7 @@
   "compilerOptions": {
     "sourceMap": true,
     "target": "es2015",
+    "module": "es2015",
     "outDir": "./dist/server",
     "baseUrl": "./src",
     "moduleResolution": "Node",

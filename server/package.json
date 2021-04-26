@@ -1,8 +1,9 @@
 {
-  "name": "lesson-1",
+  "name": "walrus-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
     "@types/morgan": "^1.9.2",
     "class-transformer": "^0.4.0",
