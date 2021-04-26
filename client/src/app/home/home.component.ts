@@ -24,15 +24,8 @@ export class HomeComponent implements OnInit {
   }
   public sensors: SensorMessage[] = [];
   public error: string;
-  private socket$: WebSocketSubject<Message>;
+  private socket$: WebSocketSubject<SensorMessage[]>;
 
   ngOnInit(): void {
-    // this.commandCenterService.getTemp().subscribe(
-    //   data => {
-    //     this.temp = data;
-    //   },
-    //   error => {
-    //     this.error = error;
-    //   });
   }
 }
