@@ -1,6 +1,6 @@
 import {singleton} from "tsyringe";
 import * as WebSocket from 'ws';
-import { Message } from './message';
+import { SensorMessage } from './sensor-message';
 import { readAllF } from "ds18b20-raspi-typescript";
 import { IncomingMessage } from "node:http";
 
@@ -20,10 +20,8 @@ export class WebSocketServer {
     this.wss = wss;
 
     this.wss.on('connection', (ws: WebSocket, req: IncomingMessage) => {
-
         const ip = req.socket.remoteAddress;
         console.log(`${ip} has connected...`);
-
 
         const extWs = ws as ExtWebSocket;
     
@@ -33,35 +31,12 @@ export class WebSocketServer {
             extWs.isAlive = true;
         });
     
-        //connection is up, let's add a simple simple event
-        // ws.on('message', (msg: string) => {
-    
-        //     const message = JSON.parse(msg) as Message;
-        //     console.log(message);
-        //     setTimeout(() => {
-        //         if (message.isBroadcast) {
-        //             //send back the message to the other clients
-        //             this.wss.clients
-        //                 .forEach(client => {
-        //                     if (client != ws) {
-        //                         client.send(this.createMessage(message.content, true, message.sender));
-        //                     }
-        //                 });
-    
-        //         }
-    
-        //         ws.send(this.createMessage(`You sent -> ${message.content}`, message.isBroadcast));
-    
-        //     }, 1000);
-    
-        // });
-    
         //send immediatly a feedback to the incoming connection and every interval thereafter  
-        ws.send(this.createMessage(readAllF(1)[0].t.toString())); 
+        ws.send(this.getSensorStatuses()); 
         setInterval(() => {
             this.wss.clients
                 .forEach(client => {
-                    client.send(this.createMessage(readAllF(1)[0].t.toString()));
+                    client.send(this.getSensorStatuses());
                 });
         }, 10000);
         
@@ -83,11 +58,16 @@ export class WebSocketServer {
     }, 10000);
   }
 
-  createMessage(content: string, isBroadcast = false, sender = 'NS'): string {
-    return JSON.stringify(new Message(content, isBroadcast, sender));
+  createMessage(sensor: string, content: string): string {
+    return JSON.stringify(new SensorMessage(sensor, content));
   }
 
-  sendStatusUpdate(status: string) {
-
+  getSensorStatuses(): SensorMessage[] {
+    let sensorMessages: SensorMessage[] = []; 
+    let tempSensors = readAllF(1);
+    tempSensors.forEach( (sensor) => {
+        sensorMessages.push(new SensorMessage(sensor.id, sensor.t.toString()));
+    });
+    return sensorMessages;
   }
 }
