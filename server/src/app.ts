@@ -8,6 +8,7 @@ import * as WebSocket from 'ws';
 import * as http from 'http';
 import * as cors from 'cors';
 import * as path from 'path';
+import * as morgan from 'morgan';
 
 class App {
   public app: express.Application;
@@ -34,6 +35,7 @@ class App {
   }
  
   private initializeMiddlewares() {
+    this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(cors());
     const angularDistPath: string = '../client/dist/automation';
