@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "target": "es2015",
-    "module": "es2015",
-    "outDir": "./dist/server",
+    "target": "es2017",
+    "outDir": "./dist",
     "baseUrl": "./src",
     "moduleResolution": "Node",
     "experimentalDecorators": true,
