@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommandCenterService } from './command-center.service';
-import { WebSocketSubject } from 'rxjs/webSocket';
+import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { SensorMessage } from './sensor-message';
+import { RxSocketClientSubject } from './rx-socket-client.subject';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,9 @@ import { SensorMessage } from './sensor-message';
 export class HomeComponent implements OnInit {
 
   constructor(private commandCenterService: CommandCenterService) { 
-    this.socket$ = new WebSocketSubject('ws://192.168.0.188:3002');
+    this.socket$ = new RxSocketClientSubject({
+      url: 'ws://192.168.0.188.3002'
+    });
 
     this.socket$
         .subscribe(
@@ -24,7 +27,7 @@ export class HomeComponent implements OnInit {
   }
   public sensors: SensorMessage[] = [];
   public error: string;
-  private socket$: WebSocketSubject<SensorMessage[]>;
+  private socket$: RxSocketClientSubject<SensorMessage[]>;
 
   ngOnInit(): void {
   }
