@@ -21,9 +21,9 @@ export interface RxSocketClientConfig {
     /** Sets the `binaryType` property of the underlying WebSocket. */
     binaryType?: 'blob' | 'arraybuffer';
     /** Sets the reconnection interval value. */
-    reconnectInterval?: number;
+    reconnectInterval: number;
     /** Sets the reconnection attempts value. */
-    reconnectAttempts?: number;
+    reconnectAttempts: number;
 }
 
 /** Type of message sent to server */
@@ -55,7 +55,7 @@ export class RxSocketClientSubject<T> extends Subject<T> {
     // Reconnection Subscription
     private _reconnectionSubscription: Subscription;
     // Reconnect interval
-    private _reconnectInterval: number | undefined;
+    private _reconnectInterval: number;
     // Reconnect attempts
     private _reconnectAttempts: number;
 
@@ -79,7 +79,7 @@ export class RxSocketClientSubject<T> extends Subject<T> {
 
         // set reconnect attempts
         if ((urlConfigOrSource as RxSocketClientConfig).reconnectAttempts) {
-            //this._reconnectAttempts = (urlConfigOrSource as RxSocketClientConfig).reconnectAttempts;
+            this._reconnectAttempts = (urlConfigOrSource as RxSocketClientConfig).reconnectAttempts;
         } else {
             this._reconnectAttempts = 10;
         }
