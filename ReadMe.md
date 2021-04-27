@@ -2,7 +2,7 @@
 
 This project is a hydroponics controlling software for the Raspberry Pi. 
 
-![alt text](https://github.com/gregcummines/walrus/blob/master/app/src/assets/images/walrus.jpeg?raw=true)
+![alt text](https://github.com/gregcummines/walrus/blob/master/client/src/assets/images/walrus.jpeg?raw=true)
 
 ## Description
 
@@ -27,9 +27,6 @@ server> npm run dev
 ```
 
 When the webserver starts you can navigate to http://localhost:3000 at which point the express web server will serve up the Angular index.html file from the Angular client/dist/automation/ folder along with the other application files referenced by index.html. 
-
-## Issue
-Although the index.html is served up and its file are all served up (main.js, styles.css, etc.), the home page component is shown which has an image referencing /assets/images/walrus.jpg. This image is being returned as a plaintext file. Figure this out and I owe you a beer. 
 
 # Walrus Angular project (under client folder)
 
