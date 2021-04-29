@@ -30,7 +30,7 @@
   "scripts": {
     "build": "npm run compile && bundle:server",
     "compile": "tsc",
-    "preserve": "npm run build",
+    "prestart": "npm run build",
     "start": "node ./bundle/bundle.js",
     "bundle:server": "webpack",
     "watch-compile:server": "tsc --watch",
