@@ -28,7 +28,8 @@
     "webpack-node-externals": "^3.0.0"
   },
   "scripts": {
-    "build": "npm run tsc && webpack",
+    "build": "npm run compile && bundle:server",
+    "compile": "tsc",
     "preserve": "npm run build",
     "start": "node ./bundle/bundle.js",
     "bundle:server": "webpack",
