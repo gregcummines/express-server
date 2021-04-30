@@ -28,15 +28,9 @@ export class WebSocketServer {
         console.log(`${ip} has connected...`);
         
         //send immediatly a feedback to the incoming connection and every interval thereafter  
-        self.wss.clients
-            .forEach(client => {
-                client.send(self.getSensorStatuses());
-            });
+        ws.send(self.getSensorStatuses());
         setInterval(() => {
-            self.wss.clients
-            .forEach(client => {
-                client.send(self.getSensorStatuses());
-            });
+            ws.send(self.getSensorStatuses());
         }, 10000);
         
         self.wss.on('error', (err) => {
