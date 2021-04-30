@@ -28,15 +28,16 @@ export class WebSocketServer {
   }
 
   handleConnection(socket: CustomSocket, req: IncomingMessage) {
+    const self = this;
     socket.on('pong', () => socket.isAlive = true)
     
     const ip = req.socket.remoteAddress;
     console.log(`${ip} has connected...`);
 
     //send immediatly a feedback to the incoming connection and every interval thereafter  
-    this.broadcastSensorsStatus();
+    self.broadcastSensorsStatus();
     setInterval(() => {
-        this.broadcastSensorsStatus();
+        self.broadcastSensorsStatus();
     }, 10000);
     
     socket.on('error', (err) => {
