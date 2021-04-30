@@ -35,7 +35,7 @@ export class WebSocketServer {
     console.log(`${ip} has connected...`);
 
     //send immediatly a feedback to the incoming connection and every interval thereafter  
-    self.broadcastSensorsStatus();
+    this.broadcastSensorsStatus();
     setInterval(() => {
         self.broadcastSensorsStatus();
     }, 10000);
