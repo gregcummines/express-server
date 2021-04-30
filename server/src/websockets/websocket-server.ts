@@ -17,38 +17,36 @@ export class WebSocketServer {
   private wss: WebSocket.Server;
 
   setWss(wss: WebSocket.Server) {
+    const self = this;
     console.log("Setting up websocket server...");
     this.wss = wss;
 
-    this.wss.on('connection', this.handleConnection);
+    this.wss.on('connection', function connection(ws: CustomSocket, req: IncomingMessage) {
+        ws.on('pong', () => ws.isAlive = true)
+        
+        const ip = req.socket.remoteAddress;
+        console.log(`${ip} has connected...`);
+        
+        //send immediatly a feedback to the incoming connection and every interval thereafter  
+        self.wss.clients
+            .forEach(client => {
+                client.send(self.getSensorStatuses());
+            });
+        setInterval(() => {
+            self.wss.clients
+            .forEach(client => {
+                client.send(self.getSensorStatuses());
+            });
+        }, 10000);
+        
+        self.wss.on('error', (err) => {
+            console.warn(`Client disconnected - reason: ${err}`);
+        });
+    });
   }
 
   getWss(): WebSocket.Server {
       return this.wss;
-  }
-
-  handleConnection(socket: CustomSocket, req: IncomingMessage) {
-    const self = this;
-    socket.on('pong', () => socket.isAlive = true)
-    
-    const ip = req.socket.remoteAddress;
-    console.log(`${ip} has connected...`);
-    console.log(this.wss);
-    //send immediatly a feedback to the incoming connection and every interval thereafter  
-    this.wss.clients
-        .forEach(client => {
-            client.send(this.getSensorStatuses());
-        });
-    setInterval(() => {
-        this.wss.clients
-        .forEach(client => {
-            client.send(this.getSensorStatuses());
-        });
-    }, 10000);
-    
-    socket.on('error', (err) => {
-        console.warn(`Client disconnected - reason: ${err}`);
-    });
   }
 
   getSensorStatuses(): string {
@@ -66,8 +64,4 @@ export class WebSocketServer {
             client.send(this.getSensorStatuses());
         });
   }
-
-  noop() {}
-
-
 }
