@@ -35,9 +35,15 @@ export class WebSocketServer {
     console.log(`${ip} has connected...`);
 
     //send immediatly a feedback to the incoming connection and every interval thereafter  
-    this.broadcastSensorsStatus();
+    this.wss.clients
+        .forEach(client => {
+            client.send(this.getSensorStatuses());
+        });
     setInterval(() => {
-        self.broadcastSensorsStatus();
+        this.wss.clients
+        .forEach(client => {
+            client.send(this.getSensorStatuses());
+        });
     }, 10000);
     
     socket.on('error', (err) => {
@@ -54,7 +60,7 @@ export class WebSocketServer {
     return JSON.stringify(sensorMessages);
   }
 
-  broadcastSensorsStatus() {
+  broadcastSensorsStatus(): void {
     this.wss.clients
         .forEach(client => {
             client.send(this.getSensorStatuses());
