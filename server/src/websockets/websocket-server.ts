@@ -23,6 +23,10 @@ export class WebSocketServer {
     this.wss.on('connection', this.handleConnection);
   }
 
+  getWss(): WebSocket.Server {
+      return this.wss;
+  }
+
   handleConnection(socket: CustomSocket, req: IncomingMessage) {
     socket.on('pong', () => socket.isAlive = true)
     
