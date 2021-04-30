@@ -33,7 +33,7 @@ export class WebSocketServer {
     
     const ip = req.socket.remoteAddress;
     console.log(`${ip} has connected...`);
-
+    console.log(this.wss);
     //send immediatly a feedback to the incoming connection and every interval thereafter  
     this.wss.clients
         .forEach(client => {
