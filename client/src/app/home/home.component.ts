@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private commandCenterService: CommandCenterService) { 
     this.socket$ = new RxSocketClientSubject({
-      url: 'ws://192.168.0.188:3002',
+      url: 'ws://192.168.0.188:3001',
       reconnectAttempts: 604800,  
       reconnectInterval: 5000
     });

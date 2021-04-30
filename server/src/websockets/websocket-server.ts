@@ -4,8 +4,9 @@ import { SensorMessage } from './sensor-message';
 import { readAllF } from "ds18b20-raspi-typescript";
 import { IncomingMessage } from "node:http";
 
-interface ExtWebSocket extends WebSocket {
-    isAlive: boolean;
+
+interface CustomSocket extends WebSocket {
+    isAlive: boolean
 }
 
 @singleton()
@@ -19,43 +20,24 @@ export class WebSocketServer {
     console.log("Setting up websocket server...");
     this.wss = wss;
 
-    this.wss.on('connection', (ws: WebSocket, req: IncomingMessage) => {
-        const ip = req.socket.remoteAddress;
-        console.log(`${ip} has connected...`);
+    this.wss.on('connection', this.handleConnection);
+  }
 
-        const extWs = ws as ExtWebSocket;
+  handleConnection(socket: CustomSocket, req: IncomingMessage) {
+    socket.on('pong', () => socket.isAlive = true)
     
-        extWs.isAlive = true;
-    
-        ws.on('pong', () => {
-            extWs.isAlive = true;
-        });
-    
-        //send immediatly a feedback to the incoming connection and every interval thereafter  
-        ws.send(this.getSensorStatuses()); 
-        setInterval(() => {
-            this.wss.clients
-                .forEach(client => {
-                    client.send(this.getSensorStatuses());
-                });
-        }, 10000);
-        
-        ws.on('error', (err) => {
-            console.warn(`Client disconnected - reason: ${err}`);
-        })
-    });
-    
+    const ip = req.socket.remoteAddress;
+    console.log(`${ip} has connected...`);
+
+    //send immediatly a feedback to the incoming connection and every interval thereafter  
+    this.broadcastSensorsStatus();
     setInterval(() => {
-        this.wss.clients.forEach((ws: WebSocket) => {
-    
-            const extWs = ws as ExtWebSocket;
-    
-            if (!extWs.isAlive) return ws.terminate();
-    
-            extWs.isAlive = false;
-            ws.ping(null, undefined);
-        });
+        this.broadcastSensorsStatus();
     }, 10000);
+    
+    socket.on('error', (err) => {
+        console.warn(`Client disconnected - reason: ${err}`);
+    });
   }
 
   getSensorStatuses(): string {
@@ -66,4 +48,15 @@ export class WebSocketServer {
     });
     return JSON.stringify(sensorMessages);
   }
+
+  broadcastSensorsStatus() {
+    this.wss.clients
+        .forEach(client => {
+            client.send(this.getSensorStatuses());
+        });
+  }
+
+  noop() {}
+
+
 }

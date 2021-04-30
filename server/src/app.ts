@@ -26,8 +26,8 @@ class App {
     const server = http.createServer(this.app);
 
     //initialize the WebSocket server instance
-    //const wss = new WebSocket.Server({ port: 3002 });
-    //this.wss.setWss(wss);
+    const wss = new WebSocket.Server({ server });
+    this.wss.setWss(wss);
 
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
