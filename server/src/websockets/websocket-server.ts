@@ -21,22 +21,21 @@ export class WebSocketServer {
     console.log("Setting up websocket server...");
     this.wss = wss;
 
-    this.wss.on('connection', function connection(ws: CustomSocket, req: IncomingMessage) {
-        ws.on('pong', () => ws.isAlive = true)
-        
-        const ip = req.socket.remoteAddress;
-        console.log(`${ip} has connected...`);
-        
-        //send immediatly a feedback to the incoming connection and every interval thereafter  
-        ws.send(self.getSensorStatuses());
-        setInterval(() => {
-            ws.send(self.getSensorStatuses());
-        }, 10000);
-        
-        self.wss.on('error', (err) => {
-            console.warn(`Client disconnected - reason: ${err}`);
+    wss.on('connection', function (ws) {
+        const id = setInterval(function () {
+          ws.send(self.getSensorStatuses(), function () {
+            //
+            // Ignore errors.
+            //
+          });
+        }, 100);
+        console.log('started client interval');
+      
+        ws.on('close', function () {
+          console.log('stopping client interval');
+          clearInterval(id);
         });
-    });
+      });
   }
 
   getWss(): WebSocket.Server {
