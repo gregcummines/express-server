@@ -60,21 +60,21 @@ export class WebSocketServer {
   }
 
   startMonitoringTemperatures() {
-    setInterval(() => {
-        const tempSensors = readAllF(1, (err: string, results: ValueWithID[]) => {
-            if (err) {
-                console.warn(err);
-            } else {
-                results.forEach( (sensor) => {
-                    const storedSensor = this.tempSensors.find(element => element.id === sensor.id);
-                    if (storedSensor) {
-                        storedSensor.t = sensor.t;
-                    } else {
-                        this.tempSensors.push(sensor);
-                    }
-                });
-            }
-        });
-    }, 1000);  
+    // setInterval(() => {
+    //     const tempSensors = readAllF(1, (err: string, results: ValueWithID[]) => {
+    //         if (err) {
+    //             console.warn(err);
+    //         } else {
+    //             results.forEach( (sensor) => {
+    //                 const storedSensor = this.tempSensors.find(element => element.id === sensor.id);
+    //                 if (storedSensor) {
+    //                     storedSensor.t = sensor.t;
+    //                 } else {
+    //                     this.tempSensors.push(sensor);
+    //                 }
+    //             });
+    //         }
+    //     });
+    // }, 1000);  
   }
 }
