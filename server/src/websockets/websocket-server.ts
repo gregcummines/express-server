@@ -30,7 +30,7 @@ export class WebSocketServer {
             // Ignore errors.
             //
           });
-        }, 100);
+        }, 5000);
         console.log('started client interval');
       
         ws.on('close', function () {
