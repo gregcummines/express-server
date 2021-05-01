@@ -1,7 +1,7 @@
 import {singleton} from "tsyringe";
 import * as WebSocket from 'ws';
 import { SensorMessage } from './sensor-message';
-import { readAllF } from "ds18b20-raspi-typescript";
+import { readAllF, ValueWithID } from "ds18b20-raspi-typescript";
 import { IncomingMessage } from "node:http";
 
 
@@ -12,9 +12,11 @@ interface CustomSocket extends WebSocket {
 @singleton()
 export class WebSocketServer {
   constructor() {
+      this.startMonitoringTemperatures();
   }
 
   private wss: WebSocket.Server;
+  private tempSensors: ValueWithID[] = [];
 
   setWss(wss: WebSocket.Server) {
     const self = this;
@@ -44,8 +46,7 @@ export class WebSocketServer {
 
   getSensorStatuses(): string {
     let sensorMessages: SensorMessage[] = []; 
-    let tempSensors = readAllF(1);
-    tempSensors.forEach( (sensor) => {
+    this.tempSensors.forEach( (sensor) => {
         sensorMessages.push(new SensorMessage(sensor.id, "temp", `${sensor.t.toString()}F`, new Date()));
     });
     return JSON.stringify(sensorMessages);
@@ -56,5 +57,22 @@ export class WebSocketServer {
         .forEach(client => {
             client.send(this.getSensorStatuses());
         });
+  }
+
+  startMonitoringTemperatures() {
+    let tempSensors = readAllF(1, (err: string, results: ValueWithID[]) => {
+        if (err) {
+            console.warn(err);
+        } else {
+            results.forEach( (sensor) => {
+                const storedSensor = this.tempSensors.find(element => element.id === sensor.id);
+                if (storedSensor) {
+                    storedSensor.t = sensor.t;
+                } else {
+                    this.tempSensors.push(sensor);
+                }
+            });
+        }
+    });
   }
 }
