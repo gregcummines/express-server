@@ -61,7 +61,7 @@ export class WebSocketServer {
   }
 
   startMonitoringTemperatures() {
-    const cron = nodecron.schedule('1 * * * * *', () => {
+    const cron = nodecron.schedule('2 * * * * *', () => {
         const tempSensors = readAllF(1, (err: string, results: ValueWithID[]) => {
             if (err) {
                 console.warn(err);
