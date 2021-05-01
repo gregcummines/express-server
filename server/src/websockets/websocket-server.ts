@@ -3,7 +3,8 @@ import * as WebSocket from 'ws';
 import { SensorMessage } from './sensor-message';
 import { readAllF, ValueWithID } from "ds18b20-raspi-typescript";
 import { IncomingMessage } from "node:http";
-
+import * as nodecron from 'node-cron';
+import { createConnection } from "node:net";
 
 interface CustomSocket extends WebSocket {
     isAlive: boolean
@@ -60,21 +61,21 @@ export class WebSocketServer {
   }
 
   startMonitoringTemperatures() {
-    // setInterval(() => {
-    //     const tempSensors = readAllF(1, (err: string, results: ValueWithID[]) => {
-    //         if (err) {
-    //             console.warn(err);
-    //         } else {
-    //             results.forEach( (sensor) => {
-    //                 const storedSensor = this.tempSensors.find(element => element.id === sensor.id);
-    //                 if (storedSensor) {
-    //                     storedSensor.t = sensor.t;
-    //                 } else {
-    //                     this.tempSensors.push(sensor);
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }, 1000);  
+    const cron = nodecron.schedule('1 * * * * *', () => {
+        const tempSensors = readAllF(1, (err: string, results: ValueWithID[]) => {
+            if (err) {
+                console.warn(err);
+            } else {
+                results.forEach( (sensor) => {
+                    const storedSensor = this.tempSensors.find(element => element.id === sensor.id);
+                    if (storedSensor) {
+                        storedSensor.t = sensor.t;
+                    } else {
+                        this.tempSensors.push(sensor);
+                    }
+                });
+            }
+        });
+    }); 
   }
 }
