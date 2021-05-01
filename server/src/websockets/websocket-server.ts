@@ -25,6 +25,7 @@ export class WebSocketServer {
     this.wss = wss;
 
     wss.on('connection', function (ws) {
+        ws.send(self.getSensorStatuses());
         const id = setInterval(function () {
           ws.send(self.getSensorStatuses(), function () {
             //
