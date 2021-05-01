@@ -77,5 +77,6 @@ export class WebSocketServer {
             }
         });
     }); 
+    cron.start();
   }
 }
