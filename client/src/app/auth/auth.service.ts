@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { catchError } from 'rxjs/operators'
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 
@@ -21,13 +21,17 @@ export class AuthService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-            .pipe(map(user => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
-                return user;
-            }));
+        const authUrl = `${environment.apiUrl}/users/authenticate`;
+        return this.http.post<any>(`authUrl`, { username, password })
+            .pipe(
+                map(user => {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.currentUserSubject.next(user);
+                    return user;
+                }),
+                catchError(this.handleError)
+            );
     }
 
     logout() {
@@ -35,4 +39,17 @@ export class AuthService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
+
+    handleError(error) {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          // client-side error
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // server-side error
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+        window.alert(errorMessage);
+        return throwError(errorMessage);
+      }
 }

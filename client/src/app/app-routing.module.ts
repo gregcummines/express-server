@@ -7,11 +7,14 @@ import { OperationsComponent } from './components/operations/operations.componen
 import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
-  {path: '', component: LoginComponent},
+  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'operations', component: OperationsComponent, canActivate: [AuthGuard]},
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]}
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
