@@ -20,16 +20,16 @@ export class UsersController implements Controller {
     getAll = (request: express.Request, 
             response: express.Response, 
             next: express.NextFunction) => {
-        this.usersService.authenticate(request.body)
-        .then(user => response.json(user))
+        this.usersService.getAll()
+        .then(users => response.json(users))
         .catch(next);
     } 
 
     authenticate = (request: express.Request, 
                     response: express.Response, 
                     next: express.NextFunction) => {
-        this.usersService.getAll()
-        .then(users => response.json(users))
+        this.usersService.authenticate(request.body)
+        .then(user => response.json(user))
         .catch(next);
     }
     
