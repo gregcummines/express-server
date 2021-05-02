@@ -4,7 +4,7 @@ export class UsersService {
     // users hardcoded for simplicity, store in a db for production applications
     private users: any = [{ id: 1, username: 'test@gmail.com', password: 'test', firstName: 'Test', lastName: 'User' }];
     
-    public authenticate({ username, password }) {
+    public async authenticate({ username, password }) {
         const user = this.users.find(u => u.username === username && u.password === password);
 
         if (!user) throw 'Username or password is incorrect';
@@ -18,7 +18,7 @@ export class UsersService {
         };
     }
 
-    getAll() {
+    public async getAll() {
         return this.users.map(u => this.omitPassword(u));
     }
 
