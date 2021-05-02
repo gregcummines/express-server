@@ -21,7 +21,7 @@ export class AuthService {
     }
 
     login(username: string, password: string) {
-        const authUrl = `${environment.apiUrl}/users/authenticate`;
+        const authUrl = `/users/authenticate`;
         return this.http.post<any>(`${authUrl}`, { username, password })
             .pipe(
                 map(user => {
