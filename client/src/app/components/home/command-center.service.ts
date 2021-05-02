@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Injectable({
     providedIn: 'root',
   })
   export class CommandCenterService {
-    private baseUrl = 'http://192.168.0.188:3000/command-center';
+    private baseUrl = `${environment.apiUrl}/command-center`;
 
     constructor(private http: HttpClient) { }  
     

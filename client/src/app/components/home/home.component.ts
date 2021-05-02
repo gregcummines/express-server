@@ -3,6 +3,7 @@ import { CommandCenterService } from './command-center.service';
 import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { SensorMessage } from './sensor-message';
 import { RxSocketClientSubject } from './rx-socket-client.subject';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private commandCenterService: CommandCenterService) { 
     this.socket$ = new RxSocketClientSubject({
-      url: 'ws://192.168.0.188:3001',
+      url: environment.apiUrl,
       reconnectAttempts: 604800,  
       reconnectInterval: 5000
     });
