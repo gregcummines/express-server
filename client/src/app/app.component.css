@@ -1,3 +1,14 @@
 .span {
     margin: auto;
 }
+.expanded-toolbar {
+    justify-content: space-between;
+    align-items: center;
+}
+.brand-icon {
+    font-size:22px !important;
+    margin-top: 6px;
+}
+.home-icon {
+    margin-bottom: 6px;
+}
