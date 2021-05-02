@@ -22,15 +22,14 @@ export class AuthService {
 
     login(username: string, password: string) {
         const authUrl = `${environment.apiUrl}/users/authenticate`;
-        return this.http.post<any>(`authUrl`, { username, password })
+        return this.http.post<any>(`${authUrl}`, { username, password })
             .pipe(
                 map(user => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
                     return user;
-                }),
-                catchError(this.handleError)
+                })
             );
     }
 
@@ -39,17 +38,4 @@ export class AuthService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
-
-    handleError(error) {
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-          // client-side error
-          errorMessage = `Error: ${error.error.message}`;
-        } else {
-          // server-side error
-          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-        }
-        window.alert(errorMessage);
-        return throwError(errorMessage);
-      }
 }

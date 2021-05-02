@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,9 @@ export class LoginComponent implements OnInit {
   public loginInvalid = false;
   private formSubmitAttempt = false;
   private returnUrl: string;
+  loading = false;
+  submitted = false;
+  error = '';
 
   constructor(
     private fb: FormBuilder,
@@ -41,7 +45,19 @@ export class LoginComponent implements OnInit {
       try {
         const username = this.form.get('username')?.value;
         const password = this.form.get('password')?.value;
-        this.authService.login(username, password);
+        this.authService.login(username, password)
+        .pipe(first())
+        .subscribe({
+            next: () => {
+                // get return url from route parameters or default to '/'
+                const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                this.router.navigate([returnUrl]);
+            },
+            error: error => {
+                this.error = error;
+                this.loading = false;
+            }
+        });
       } catch (err) {
         this.loginInvalid = true;
       }

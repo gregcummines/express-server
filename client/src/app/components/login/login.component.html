@@ -19,5 +19,6 @@
         </mat-form-field>
         <button mat-raised-button color="primary">Login</button>
       </form>
+      <mat-error *ngIf="error">{{error}}</mat-error>
     </mat-card-content>
   </mat-card>
