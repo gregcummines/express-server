@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { AngularMaterialModule } from './angular-material.module';
@@ -26,6 +27,7 @@ import { fakeBackendProvider } from './_helpers/fake-backend-provider';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FlexLayoutModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
     HttpClientModule,
