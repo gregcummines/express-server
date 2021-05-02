@@ -46,10 +46,10 @@ class App {
       console.log("Getting Angular app for path /");
       res.sendFile(angularAppPath)
     });
-    this.app.get('/*', (req: express.Request, res: express.Response) => { 
-      console.log("Getting Angular app for path /*");
-      res.sendFile(angularAppPath)
-    });
+    // this.app.get('/*', (req: express.Request, res: express.Response) => { 
+    //   console.log("Getting Angular app for path /*");
+    //   res.sendFile(angularAppPath)
+    // });
   }
  
   private initializeErrorHandling() {
