@@ -27,7 +27,7 @@ class PostsController implements Controller {
   }
 
   getAllPosts = (request: express.Request, response: express.Response, next: express.NextFunction) => {
-    next(new PostNotFoundException("6"));
+    //next(new PostNotFoundException("6"));
     response.send(this.posts);
   }
  
