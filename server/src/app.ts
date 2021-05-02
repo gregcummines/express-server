@@ -42,8 +42,14 @@ class App {
     this.app.use(express.static(`${angularDistPath}`));
     const angularAppPath = path.resolve(`${angularDistPath}/index.html`);
     // If the request was on the root path, send the Angular app back
-    this.app.get('/', (req: express.Request, res: express.Response) => { res.sendFile(angularAppPath)});
-    this.app.get('/*', (req: express.Request, res: express.Response) => { res.sendFile(angularAppPath)});
+    this.app.get('/', (req: express.Request, res: express.Response) => { 
+      console.log("Getting Angular app for path /");
+      res.sendFile(angularAppPath)
+    });
+    this.app.get('/*', (req: express.Request, res: express.Response) => { 
+      console.log("Getting Angular app for path /*");
+      res.sendFile(angularAppPath)
+    });
   }
  
   private initializeErrorHandling() {
