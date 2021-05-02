@@ -14,6 +14,8 @@ class App {
   public app: express.Application;
   public port: number;
 
+  private readonly angularDistPath: string = '../client/dist/automation';
+
   private wss: WebSocketServer;
 
   constructor(controllers: Controller[], port: number) {
@@ -31,6 +33,7 @@ class App {
 
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
+    this.initializeAngularHookup();
     this.initializeErrorHandling();
   }
  
@@ -38,18 +41,7 @@ class App {
     this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(cors());
-    const angularDistPath: string = '../client/dist/automation';
-    this.app.use(express.static(`${angularDistPath}`));
-    const angularAppPath = path.resolve(`${angularDistPath}/index.html`);
-    // If the request was on the root path, send the Angular app back
-    this.app.get('/', (req: express.Request, res: express.Response) => { 
-      console.log("Getting Angular app for path /");
-      res.sendFile(angularAppPath)
-    });
-    this.app.get('/*', (req: express.Request, res: express.Response) => { 
-      console.log("Getting Angular app for path /*");
-      res.sendFile(angularAppPath)
-    });
+    this.app.use(express.static(`${this.angularDistPath}`));
   }
  
   private initializeErrorHandling() {
@@ -58,10 +50,24 @@ class App {
 
   private initializeControllers(controllers: Controller[]) {
     controllers.forEach((controller) => {
+      console.log(`Setting up path for controller route: ${controller.path}`);
       this.app.use('/', controller.router);
     });
   }
  
+  private initializeAngularHookup() {
+    const angularAppPath = path.resolve(`${this.angularDistPath}/index.html`);
+    // If the request was on the root path, send the Angular app back
+    this.app.get('/', (req: express.Request, res: express.Response) => { 
+      console.log("Getting Angular app for path /");
+      res.sendFile(angularAppPath);
+    });
+    this.app.get('/*', (req: express.Request, res: express.Response) => { 
+      console.log("Getting Angular app for path /*");
+      res.sendFile(angularAppPath);
+    });
+  }
+
   public listen() {
     const server = this.app.listen(this.port, () => {
       console.log(`App listening on the port ${this.port}`);
