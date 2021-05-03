@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private commandCenterService: CommandCenterService) { 
     this.socket$ = new RxSocketClientSubject({
-      url: environment.apiUrl,
+      url: `ws://${environment.apiUrl}`,
       reconnectAttempts: 604800,  
       reconnectInterval: 5000
     });
