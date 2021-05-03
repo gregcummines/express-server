@@ -1,6 +1,6 @@
 # Walrus
 
-This project is a work in progress for a Raspberry Pi controller with switches and sensors. So far it can read a couple of temperature sensors and display them in a web browser via an Angular application. I will be adding controls to control pumps and other switches soon. The intent of this project is to access my Raspberry Pi as a web server and controller/sensor unit from any web browser on my local area network through WiFi. I have added login because it someone happens to get the IP address of my Pi and brings up the Angular app in a web browser, I don't want anyone controlling stuff in my home except me, so it needs to be secure. 
+This project is a work in progress for a Raspberry Pi controller with switches and sensors. So far it can read a couple of temperature sensors and display them in a web browser via an Angular application. I will be adding controls to control pumps and other switches soon. The intent of this project is to access my Raspberry Pi as a web server and controller/sensor unit from any web browser on my local area network through WiFi. I have added login because if someone happens to get the IP address of my Pi and brings up the Angular app in a web browser while in my home on my password protected WiFi rounter, I don't want them controlling stuff in my home except me, so it needs to be secure. It may never happen, but now was a good time to learn about and follow best-practices about security.
 
 ![alt text](https://github.com/gregcummines/walrus/blob/master/client/src/assets/images/walrus.jpeg?raw=true)
 
