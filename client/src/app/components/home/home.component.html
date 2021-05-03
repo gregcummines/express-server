@@ -2,6 +2,8 @@
     <span>{{error | json}}</span>
 </mat-toolbar>
 
+<mat-progress-bar *ngIf="sensors.length === 0" mode="query"></mat-progress-bar>
+
 <div class="all-sensors">
     <div *ngFor="let sensor of sensors; let i = index">
         <mat-card>
