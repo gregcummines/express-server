@@ -9,7 +9,7 @@ async function authMiddleware(request: RequestWithUser, response: Response, next
   const cookies = request.cookies;
   const users: any = [{ id: 1, username: 'test@gmail.com', password: 'test', firstName: 'Test', lastName: 'User' }];
   if (cookies && cookies.Authorization) {
-    const secret = process.env.JWT_SECRET;
+    const secret = 'THIS IS A SAMPLE SECRET'; //process.env.JWT_SECRET;
     try {
       const verificationResponse = jwt.verify(cookies.Authorization, secret) as DataStoredInToken;
       const id = verificationResponse._id;

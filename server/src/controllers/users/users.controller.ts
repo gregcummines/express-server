@@ -1,5 +1,5 @@
 import * as express from 'express';
-import authMiddleware from 'middleware/auth.middleware';
+import authMiddleware from '../../middleware/auth.middleware';
 import Controller from '../../interfaces/controller.interface';
 import { UsersService } from './users.service';
 export class UsersController implements Controller {
