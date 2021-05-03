@@ -1,7 +1,7 @@
 import * as express from 'express';
+import { authenticateJWT } from 'middleware/auth.middleware';
 import Controller from '../../interfaces/controller.interface';
 import { UsersService } from './users.service';
-
 export class UsersController implements Controller {
     private usersService: UsersService = new UsersService();
     
@@ -13,7 +13,7 @@ export class UsersController implements Controller {
     }
    
     public intializeRoutes() {
-      this.router.get(this.path, this.getAll);
+      this.router.get(this.path, authenticateJWT, this.getAll);
       this.router.post(`${this.path}/authenticate`, this.authenticate);
     }
 
@@ -34,15 +34,3 @@ export class UsersController implements Controller {
     }
     
 }  
-
-// function authenticate(req, res, next) {
-//     userService.authenticate(req.body)
-//         .then(user => res.json(user))
-//         .catch(next);
-// }
-
-// function getAll(req, res, next) {
-//     userService.getAll()
-//         .then(users => res.json(users))
-//         .catch(next);
-// }
