@@ -10,7 +10,7 @@ export class UsersService {
         if (!user) throw 'Username or password is incorrect';
 
         // create a jwt token that is valid for 7 days
-        const token = jwt.sign({ id: user.id }, 'THIS IS A SAMPLE SECRET', { expiresIn: '30d' });
+        const token = jwt.sign({ id: user.id }, process.env["WALRUS_JWT_SECRET_KEY"], { expiresIn: '30d' });
         console.log(`Returning auth token: ${token}`);
         return {
             ...this.omitPassword(user),

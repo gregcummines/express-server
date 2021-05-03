@@ -33,16 +33,6 @@ export class HomeComponent implements OnInit {
           (err) => console.error(err),
           () => console.warn('Completed!')
         );
-      
-      const users = http.get<any>('http://192.168.0.188:3001/users').subscribe({
-        next: data => {
-            console.log(data);
-        },
-        error: error => {
-            this.error = error.message;
-            console.error('There was an error!', error);
-        }
-      });
   }
   public sensors: SensorMessage[] = [];
   public error: string;

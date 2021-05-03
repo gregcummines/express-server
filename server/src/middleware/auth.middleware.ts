@@ -9,7 +9,7 @@ async function authMiddleware(request: RequestWithUser, response: Response, next
   const authHeader = request.headers.authorization;
   const users: any = [{ id: 1, username: 'test@gmail.com', password: 'test', firstName: 'Test', lastName: 'User' }];
   if (authHeader) {
-    const secret = 'THIS IS A SAMPLE SECRET'; //process.env.JWT_SECRET;
+    const secret = process.env["WALRUS_JWT_SECRET_KEY"];
     try {
       const token = authHeader.split(' ')[1];
       console.log(`Authenticating token: ${token}`);
