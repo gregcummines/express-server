@@ -1,13 +1,24 @@
 <mat-toolbar *ngIf="error" color="warn">
     <span>{{error | json}}</span>
 </mat-toolbar>
-<mat-toolbar *ngIf="!error && sensors.length > 0" color="accent">
-    <mat-toolbar-row *ngFor="let sensor of sensors">
-        <span>{{sensor.content}} | Updated: {{sensor.lastUpdated | amTimeAgo}}</span>
-    </mat-toolbar-row>
-</mat-toolbar>
-<mat-toolbar *ngIf="!error && sensors.length === 0" color="accent">
-    <span>Loading...</span>
-</mat-toolbar>
-<!-- <img src="/assets/images/walrus.jpeg" /> -->
 
+<div class="all-sensors">
+    <div *ngFor="let sensor of sensors; let i = index">
+        <mat-card>
+            <mat-card-title>
+                <mat-icon class="sensor-icon" color="accent" aria-hidden="false" aria-label="circle check mark icon">
+                    cloud</mat-icon>
+                {{ sensor.content }}
+            </mat-card-title>
+            <div class="detail-options">
+                <mat-icon class="sensor-icon icon-clickable" title="Refresh" color="warn" (click)="onRefresh(i)">refresh</mat-icon>
+            </div>
+            <mat-card-content>
+                <p>
+                    <span class="detail-label">Sensor:</span> {{ sensor.sensor }}
+                </p>
+                <p>Last Updated: {{sensor.lastUpdated | amTimeAgo}}</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

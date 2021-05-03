@@ -11,7 +11,7 @@ import { environment } from '@environments/environment';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  loaded: boolean = false;
   constructor(private commandCenterService: CommandCenterService) { 
     this.socket$ = new RxSocketClientSubject({
       url: `ws://${environment.apiUrl}`,
@@ -22,7 +22,12 @@ export class HomeComponent implements OnInit {
     this.socket$
         .subscribe(
           (data) => {
-            this.sensors = data;
+            if (!this.loaded) {
+              this.sensors = data;
+              // TODO: Uncomment the following line if you don't want the DOM refreshing so you
+              // can use Chrome debugger to inspect elements. Otherwise they keep getting recreated.
+              //this.loaded = true;
+            }
           },
           (err) => console.error(err),
           () => console.warn('Completed!')
@@ -33,5 +38,9 @@ export class HomeComponent implements OnInit {
   private socket$: RxSocketClientSubject<SensorMessage[]>;
 
   ngOnInit(): void {
+  }
+
+  onRefresh(i: number) {
+
   }
 }
