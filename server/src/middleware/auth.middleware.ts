@@ -12,8 +12,9 @@ async function authMiddleware(request: RequestWithUser, response: Response, next
     const secret = 'THIS IS A SAMPLE SECRET'; //process.env.JWT_SECRET;
     try {
       const token = authHeader.split(' ')[1];
+      console.log(`Authenticating token: ${token}`);
       const verificationResponse = jwt.verify(token, secret) as DataStoredInToken;
-      const id = verificationResponse._id;
+      const id = verificationResponse.id;
       const user = await users.find(element => element.id === id);
       if (user) {
         request.user = user;

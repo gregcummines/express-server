@@ -11,7 +11,7 @@ export class UsersService {
 
         // create a jwt token that is valid for 7 days
         const token = jwt.sign({ sub: user.id }, 'THIS IS A SAMPLE SECRET', { expiresIn: '30d' });
-
+        console.log(`Returning auth token: ${token}`);
         return {
             ...this.omitPassword(user),
             token
