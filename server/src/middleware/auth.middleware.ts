@@ -1,23 +1,31 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import AuthenticationTokenMissingException from '../exceptions/AuthenticationTokenMissingException';
+import WrongAuthenticationTokenException from '../exceptions/WrongAuthenticationTokenException';
+import DataStoredInToken from '../interfaces/dataStoredInToken';
+import RequestWithUser from '../interfaces/requestWithUser.interface';
 
-function authenticateJWT(req: any, res: Response, next: NextFunction) {
-  const authHeader = req.headers.authorization;
-
-  if (authHeader) {
-      const token = authHeader.split(' ')[1];
-
-      jwt.verify(token, 'THIS IS A SAMPLE SECRET', (err, user) => {
-          if (err) {
-              return res.sendStatus(403);
-          }
-
-          req.user = user;
-          next();
-      });
+async function authMiddleware(request: RequestWithUser, response: Response, next: NextFunction) {
+  const cookies = request.cookies;
+  const users: any = [{ id: 1, username: 'test@gmail.com', password: 'test', firstName: 'Test', lastName: 'User' }];
+  if (cookies && cookies.Authorization) {
+    const secret = process.env.JWT_SECRET;
+    try {
+      const verificationResponse = jwt.verify(cookies.Authorization, secret) as DataStoredInToken;
+      const id = verificationResponse._id;
+      const user = await users.find(element => element.id === id);
+      if (user) {
+        request.user = user;
+        next();
+      } else {
+        next(new WrongAuthenticationTokenException());
+      }
+    } catch (error) {
+      next(new WrongAuthenticationTokenException());
+    }
   } else {
-      res.sendStatus(401);
+    next(new AuthenticationTokenMissingException());
   }
-};
+}
 
-export default authenticateJWT;
+export default authMiddleware;
