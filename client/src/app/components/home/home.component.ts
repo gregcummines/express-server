@@ -4,6 +4,7 @@ import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { SensorMessage } from './sensor-message';
 import { RxSocketClientSubject } from './rx-socket-client.subject';
 import { environment } from '@environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ import { environment } from '@environments/environment';
 })
 export class HomeComponent implements OnInit {
   loaded: boolean = false;
-  constructor(private commandCenterService: CommandCenterService) { 
+  constructor(private commandCenterService: CommandCenterService, private http: HttpClient) { 
     this.socket$ = new RxSocketClientSubject({
       url: `ws://${environment.apiUrl}`,
       reconnectAttempts: 604800,  
@@ -32,6 +33,16 @@ export class HomeComponent implements OnInit {
           (err) => console.error(err),
           () => console.warn('Completed!')
         );
+      
+      const users = http.get<any>('http://192.168.0.188:3001/users').subscribe({
+        next: data => {
+            console.log(data);
+        },
+        error: error => {
+            this.error = error.message;
+            console.error('There was an error!', error);
+        }
+      });
   }
   public sensors: SensorMessage[] = [];
   public error: string;
