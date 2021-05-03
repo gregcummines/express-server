@@ -1,5 +1,5 @@
 import * as express from 'express';
-import authenticateJWT from 'middleware/auth.middleware';
+import authMiddleware from 'middleware/auth.middleware';
 import Controller from '../../interfaces/controller.interface';
 import { UsersService } from './users.service';
 export class UsersController implements Controller {
@@ -13,7 +13,7 @@ export class UsersController implements Controller {
     }
    
     public intializeRoutes() {
-      this.router.get(this.path, authenticateJWT, this.getAll);
+      this.router.get(this.path, authMiddleware, this.getAll);
       this.router.post(`${this.path}/authenticate`, this.authenticate);
     }
 
