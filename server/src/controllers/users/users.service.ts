@@ -3,7 +3,7 @@ import { WalrusDatabase } from 'respository/walrus';
 import User from '../../interfaces/user.interface';
 export class UsersService {
     // users hardcoded for simplicity, store in a db for production applications
-    public async authenticate({ username, password }) {
+    public authenticate({ username, password }) {
         const walrusDatabase = new WalrusDatabase();
         const user = walrusDatabase.getUser(username, password);
 
