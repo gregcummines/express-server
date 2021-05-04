@@ -1,16 +1,18 @@
 # Walrus
 
-This project is a hydroponics controlling software for the Raspberry Pi. 
+This project is a work in progress for a Raspberry Pi controller with switches and sensors. So far it can read a couple of temperature sensors and display them in a web browser via an Angular application. I will be adding controls to control pumps and other switches soon. The intent of this project is to access my Raspberry Pi as a web server and controller/sensor unit from any web browser on my local area network through WiFi. I have added login because if someone happens to get the IP address of my Pi and brings up the Angular app in a web browser while in my home on my password protected WiFi rounter, I don't want them controlling stuff in my home except me, so it needs to be secure. It may never happen, but now was a good time to learn about and follow best-practices about security.
 
 ![alt text](https://github.com/gregcummines/walrus/blob/master/client/src/assets/images/walrus.jpeg?raw=true)
 
 ## Description
 
 This project has 2 folders, client and server.
-client - Angular front end application
+client - Angular front end application displaying 2 temperatures using 2 DS18B20 temp sensors. The application requires login which is currently test@gmail.com with password of "test". I plan to later change this to be more secure. 
 server - Backend Nodejs express web server that serves up the Angular app and provides a web server for REST calls from the Angular front end.
 
 ## Getting Started
+
+This project was meant to be used on a Raspberry Pi. I am using a Pi 4. 
 
 To start, we need to build the Angular application first, so while in the client folder do the following:
 ```
@@ -18,6 +20,12 @@ client> npm install
 client> npm install -g @angular/cli
 client> ng build
 ```
+
+Then install the JWT secret key to linux environment variables. While in the server folder:
+server> source app.env
+server> printenv
+
+The printenv command will reveal the WALRUS_JWT_SECRET_KEY being added as an environment variable, which will later be referenced at runtime by the server code.
 
 Next, navigate to the server folder and start the express web server:
 ```
