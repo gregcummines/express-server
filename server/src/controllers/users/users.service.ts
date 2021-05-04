@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { WalrusDatabase } from 'respository/walrus';
+import { WalrusDatabase } from '../../repository/walrus';
 import User from '../../interfaces/user.interface';
 export class UsersService {
     // users hardcoded for simplicity, store in a db for production applications
