@@ -2,9 +2,11 @@ import User from '../interfaces/user.interface';
 import * as sqlite from 'sqlite3';
 
 export class WalrusDatabase {
+    private readonly dbPath: string = "./bundle/walrus.db";
+
     public getUser(username: string, password: string): User {
         let user: User = null;
-        const db = new sqlite.Database("walrus.db", (err) => {
+        const db = new sqlite.Database(this.dbPath, (err) => {
             if (err) {
               console.error('Could not connect to database', err);
             } else {
@@ -34,7 +36,7 @@ export class WalrusDatabase {
 
     public getUsers(): User[] {
         let users: User[] = null;
-        const db = new sqlite.Database("walrus.db", (err) => {
+        const db = new sqlite.Database(this.dbPath, (err) => {
             if (err) {
               console.error('Could not connect to database', err);
             } else {
