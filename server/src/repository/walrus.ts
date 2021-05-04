@@ -22,11 +22,13 @@ export class WalrusDatabase {
                 if (err) {
                     console.error(err);
                 } else {
-                    user = new User();
-                    user.id = row.id;
-                    user.firstName = row.first_name;
-                    user.lastName = row.last_name;
-                    user.email = row.email;
+                    if (row) {
+                        user = new User();
+                        user.id = row.id;
+                        user.firstName = row.first_name;
+                        user.lastName = row.last_name;
+                        user.email = row.email;
+                    }
                 }
             });
             db.close();
