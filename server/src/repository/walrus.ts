@@ -14,7 +14,9 @@ export class WalrusDatabase {
         if (db) {
             const params = [username, password];
             
-            db.get("SELECT * FROM user WHERE email = ? and password = ?", params, (err, row) => {
+            db.get(`
+             SELECT * FROM [user]
+             WHERE email = ? and password = ?`, params, (err, row) => {
                 if (err) {
                     console.error(err);
                 } else {
@@ -25,6 +27,7 @@ export class WalrusDatabase {
                     user.email = row.email;
                 }
             });
+            db.close();
         }
         return user;
     } 
@@ -39,7 +42,7 @@ export class WalrusDatabase {
             }
         });
         if (db) {
-            db.all("SELECT * FROM user", (err, rows) => {
+            db.all("SELECT * FROM [user]", (err, rows) => {
                 if (err) {
                     console.error(err);
                 } else {
@@ -54,6 +57,7 @@ export class WalrusDatabase {
                     
                 }
             });
+            db.close();
         }
         return users;
     } 
