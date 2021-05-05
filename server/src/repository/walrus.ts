@@ -4,7 +4,48 @@ import * as sqlite from 'sqlite3';
 export class WalrusDatabase {
     private readonly dbPath: string = "./bundle/walrus.db";
 
-    public getUser(username: string, password: string): User {
+    // This method returns true if it is the first user added to the database, in which case
+    // that user is automatically the admin. All subsequent users will not automatically be
+    // authorized until the admin flips a flag in the database for that user. 
+    public addUser(firstName: string, lastName: string, email: string, password: string) : User {
+        let user = new User();
+        const db = new sqlite.Database(this.dbPath, (err) => {
+            if (err) {
+              console.error('Could not connect to database', err);
+            } else {
+              console.log('Connected to database');
+            }
+        });
+        if (db) {   
+            const rowsExist = db.run("SELECT COUNT(1) FROM [user];");
+            // If there are not users in the database, which means this is the first user
+            // being added, that user is automatically "Admin" role and is active
+            // Otherwise subsequent users are not active and will need an "Admin" to activate them.
+            let role = "User";
+            let active = 0;
+            if (!rowsExist) {
+                role = "Admin";
+                active = 1;
+            }
+
+            const params = [firstName, lastName, email, password, role, active];
+            
+            db.run(`
+             INSERT INTO [user] ([lastName], [firstName], [email], [password], [role], [active])
+             VALUES (?,?,?,?,?,?);`, params);
+            db.close();
+
+            user.firstName = firstName;
+            user.lastName = lastName;
+            user.email = email;
+            user.role = role;
+            user.active = active;
+        }
+
+        return user;
+    }
+
+    public getUser(username: string): User {
         let user: User = null;
         const db = new sqlite.Database(this.dbPath, (err) => {
             if (err) {
@@ -14,11 +55,11 @@ export class WalrusDatabase {
             }
         });
         if (db) {
-            const params = [username, password];
+            const params = [username];
             
             db.get(`
              SELECT * FROM [user]
-             WHERE email = ? and password = ?`, params, (err, row) => {
+             WHERE email = ?`, params, (err, row) => {
                 if (err) {
                     console.error(err);
                 } else {
@@ -28,6 +69,9 @@ export class WalrusDatabase {
                         user.firstName = row.first_name;
                         user.lastName = row.last_name;
                         user.email = row.email;
+                        user.password = row.password;
+                        user.role = row.role;
+                        user.active = row.active;
                     }
                 }
             });
@@ -56,6 +100,8 @@ export class WalrusDatabase {
                         user.firstName = row.first_name;
                         user.lastName = row.last_name;
                         user.email = row.email;
+                        user.role = row.role;
+                        user.active = row.active;
                         users.push(user);
                     });
                     

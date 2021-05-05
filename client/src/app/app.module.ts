@@ -15,6 +15,7 @@ import { OperationsComponent } from './components/operations/operations.componen
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { fakeBackendProvider } from './_helpers/fake-backend-provider';
+import { ManageAuthComponent } from './components/manage-auth/manage-auth.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { fakeBackendProvider } from './_helpers/fake-backend-provider';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    OperationsComponent
+    OperationsComponent,
+    ManageAuthComponent
   ],
   imports: [
     BrowserModule,

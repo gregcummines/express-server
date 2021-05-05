@@ -20,5 +20,10 @@
         <button mat-raised-button color="primary">Login</button>
       </form>
       <mat-error *ngIf="error">{{error}}</mat-error>
+      <div>
+        <p></p>
+        <p>Looking to <a routerLink='/register'>create a new account</a>?</p>
+        <p>Forgot <a routerLink='/forgot-password'>password</a>?</p>
+      </div>
     </mat-card-content>
   </mat-card>

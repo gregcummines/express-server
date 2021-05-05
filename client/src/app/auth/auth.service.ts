@@ -38,6 +38,19 @@ export class AuthService {
             );
     }
 
+    register(firstName: string, lastName: string, username: string, password: string) {
+        const authUrl = `/users/register`;
+        return this.http.post<any>(`${authUrl}`, { firstName, lastName, username, password })
+            .pipe(
+                map(user => {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.currentUserSubject.next(user);
+                    return user;
+                })
+            );
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

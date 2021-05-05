@@ -23,6 +23,18 @@ export class UsersController implements Controller {
         return this.usersService.getAll()
     } 
 
+    register = (request: express.Request, 
+              response: express.Response, 
+              next: express.NextFunction) => {
+        let userWithToken = null;
+        try {
+          userWithToken = this.usersService.register(request.body);
+        } catch(error) {
+          response.status(401).send('Invalid login credentials');
+        }
+          return userWithToken; 
+        }
+
     authenticate = (request: express.Request, 
                     response: express.Response, 
                     next: express.NextFunction) => {
