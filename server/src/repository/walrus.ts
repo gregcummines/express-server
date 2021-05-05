@@ -1,6 +1,6 @@
 import { User } from '../interfaces/user';
 import * as sqlite from 'sqlite3';
-import { Role } from 'interfaces/role';
+import { Role } from '../interfaces/role';
 
 export class WalrusDatabase {
     private readonly dbPath: string = "./bundle/walrus.db";
