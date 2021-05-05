@@ -3,11 +3,11 @@ import { User } from '@app/models/user';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-manage-auth',
-  templateUrl: './manage-auth.component.html',
-  styleUrls: ['./manage-auth.component.css']
+  selector: 'app-manage-users',
+  templateUrl: './manage-users.component.html',
+  styleUrls: ['./manage-users.component.css']
 })
-export class ManageAuthComponent implements OnInit {
+export class ManageUsersComponent implements OnInit {
   loading = false;
   users: User[] = [];
   constructor(private userService: UserService) { }
