@@ -15,7 +15,7 @@ import { OperationsComponent } from './components/operations/operations.componen
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { fakeBackendProvider } from './_helpers/fake-backend-provider';
-import { ManageAuthComponent } from './components/manage-users/manage-users.component';
+import { ManageUsersComponent } from './components/manage-users/manage-users.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 @NgModule({
@@ -25,7 +25,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     LoginComponent,
     RegisterComponent,
     OperationsComponent,
-    ManageAuthComponent,
+    ManageUsersComponent,
     ForgotPasswordComponent
   ],
   imports: [
