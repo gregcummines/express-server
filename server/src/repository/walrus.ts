@@ -1,5 +1,6 @@
-import User from '../interfaces/user.interface';
+import { User } from '../interfaces/user';
 import * as sqlite from 'sqlite3';
+import { Role } from 'interfaces/role';
 
 export class WalrusDatabase {
     private readonly dbPath: string = "./bundle/walrus.db";
@@ -21,10 +22,10 @@ export class WalrusDatabase {
             // If there are not users in the database, which means this is the first user
             // being added, that user is automatically "Admin" role and is active
             // Otherwise subsequent users are not active and will need an "Admin" to activate them.
-            let role = "User";
+            let role: Role = Role.User;
             let active = 0;
             if (!rowsExist) {
-                role = "Admin";
+                role = Role.Admin;
                 active = 1;
             }
 
@@ -39,7 +40,7 @@ export class WalrusDatabase {
             user.lastName = lastName;
             user.email = email;
             user.role = role;
-            user.active = active;
+            user.active = (!!active);
         }
 
         return user;
