@@ -1,5 +1,6 @@
 import { NextFunction, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { WalrusRepository } from '../repository/walrus';
 import AuthenticationTokenMissingException from '../exceptions/AuthenticationTokenMissingException';
 import WrongAuthenticationTokenException from '../exceptions/WrongAuthenticationTokenException';
 import DataStoredInToken from '../interfaces/dataStoredInToken';
@@ -7,7 +8,6 @@ import RequestWithUser from '../interfaces/requestWithUser.interface';
 
 async function authMiddleware(request: RequestWithUser, response: Response, next: NextFunction) {
   const authHeader = request.headers.authorization;
-  const users: any = [{ id: 1, username: 'test@gmail.com', password: 'test', firstName: 'Test', lastName: 'User' }];
   if (authHeader) {
     const secret = process.env["WALRUS_JWT_SECRET_KEY"];
     try {
@@ -15,7 +15,8 @@ async function authMiddleware(request: RequestWithUser, response: Response, next
       console.log(`Authenticating token: ${token}`);
       const verificationResponse = jwt.verify(token, secret) as DataStoredInToken;
       const id = verificationResponse.id;
-      const user = await users.find(element => element.id === id);
+      const walrusRepository = new WalrusRepository();
+      const user = walrusRepository.getUserById(id);
       if (user) {
         request.user = user;
         next();

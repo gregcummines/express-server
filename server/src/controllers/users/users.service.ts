@@ -1,14 +1,13 @@
 import * as jwt from 'jsonwebtoken';
-import { WalrusDatabase } from '../../repository/walrus';
+import { WalrusRepository } from '../../repository/walrus';
 import { User } from '../../interfaces/user';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../../interfaces/role';
 export class UsersService {
-    private readonly salt = 5;
 
     public authenticate({ username, password }): User {
-        const walrusDatabase = new WalrusDatabase();
-        const user = walrusDatabase.getUser(username);
+        const walrusRepository = new WalrusRepository();
+        const user = walrusRepository.getUser(username);
         // If the user is not found or the password is incorrect
         if (!user ||
             !bcrypt.compareSync(user.password, password) ) {
@@ -25,9 +24,9 @@ export class UsersService {
     }
 
     public register({ firstName, lastName, email, password }): User {
-        const walrusDatabase = new WalrusDatabase();
-        const passwordHash = bcrypt.hashSync(password, this.salt);
-        const user = walrusDatabase.addUser(
+        const walrusRepository = new WalrusRepository();
+        const passwordHash = bcrypt.hashSync(password, process.env["WALRUS_PASSWORD_SALT"]);
+        const user = walrusRepository.addUser(
                 firstName, 
                 lastName, 
                 email, 
@@ -42,7 +41,7 @@ export class UsersService {
     }
 
     public getAll(): User[] {
-        const walrusDatabase = new WalrusDatabase();
-        return walrusDatabase.getUsers();
+        const walrusRepository = new WalrusRepository();
+        return walrusRepository.getUsers();
     }
 }

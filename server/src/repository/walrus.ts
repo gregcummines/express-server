@@ -2,7 +2,7 @@ import { User } from '../interfaces/user';
 import * as sqlite from 'sqlite3';
 import { Role } from '../interfaces/role';
 
-export class WalrusDatabase {
+export class WalrusRepository {
     private readonly dbPath: string = "./bundle/walrus.db";
 
     // This method returns true if it is the first user added to the database, in which case
@@ -61,6 +61,41 @@ export class WalrusDatabase {
             db.get(`
              SELECT * FROM [user]
              WHERE email = ?`, params, (err, row) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    if (row) {
+                        user = new User();
+                        user.id = row.id;
+                        user.firstName = row.first_name;
+                        user.lastName = row.last_name;
+                        user.email = row.email;
+                        user.password = row.password;
+                        user.role = row.role;
+                        user.active = row.active;
+                    }
+                }
+            });
+            db.close();
+        }
+        return user;
+    } 
+
+    public getUserById(id: number): User {
+        let user: User = null;
+        const db = new sqlite.Database(this.dbPath, (err) => {
+            if (err) {
+              console.error('Could not connect to database', err);
+            } else {
+              console.log('Connected to database');
+            }
+        });
+        if (db) {
+            const params = [id];
+            
+            db.get(`
+             SELECT * FROM [user]
+             WHERE [id] = ?`, params, (err, row) => {
                 if (err) {
                     console.error(err);
                 } else {
