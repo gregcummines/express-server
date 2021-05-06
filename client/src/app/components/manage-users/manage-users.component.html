@@ -1,3 +1,7 @@
+<mat-toolbar *ngIf="error" color="warn">
+    <span>{{error | json}}</span>
+</mat-toolbar>
+
 <div class="card mt-4">
     <h4 class="card-header">Manage Users</h4>
     <div class="card-body">
