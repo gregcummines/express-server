@@ -10,7 +10,7 @@ export class UsersService {
         const user = walrusRepository.getUser(username);
         // If the user is not found or the password is incorrect
         if (!user ||
-            !bcrypt.compareSync(user.password, password) ) {
+            !bcrypt.compareSync(password, user.password) ) {
                 throw 'Username or password is incorrect';
         }
         
@@ -23,13 +23,13 @@ export class UsersService {
         return user;
     }
 
-    public register({ firstName, lastName, email, password }): User {
+    public register({ firstName, lastName, username, password }): User {
         const walrusRepository = new WalrusRepository();
-        const passwordHash = bcrypt.hashSync(password, process.env["WALRUS_PASSWORD_SALT"]);
+        const passwordHash = bcrypt.hashSync(password, 10);
         const user = walrusRepository.addUser(
                 firstName, 
                 lastName, 
-                email, 
+                username, 
                 passwordHash
             );
 

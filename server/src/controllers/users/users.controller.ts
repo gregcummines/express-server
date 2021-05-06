@@ -31,6 +31,7 @@ export class UsersController implements Controller {
         try {
           userWithToken = this.usersService.register(request.body);
         } catch(error) {
+          console.log(error);
           response.status(401).send('Invalid login credentials');
         }
           return userWithToken; 
