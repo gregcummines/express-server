@@ -14,6 +14,7 @@ export class UsersController implements Controller {
    
     public intializeRoutes() {
       this.router.get(this.path, authMiddleware, this.getAll);
+      this.router.post(`${this.path}/register`, this.register);
       this.router.post(`${this.path}/authenticate`, this.authenticate);
     }
 
