@@ -95,7 +95,7 @@ export class WalrusRepository {
     } 
 
     public getUsers(): User[] {
-        let users: User[] = null;
+        let users: User[] = [];
         const db = new Database(this.dbPath, { verbose: console.log });
         if (db) {
             const usersDB = db.prepare("SELECT * FROM [user]").all(); 
