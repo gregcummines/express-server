@@ -12,9 +12,9 @@
       <mat-icon>exit_to_app</mat-icon>
       Logout
     </button>
-    <button mat-menu-item *ngIf="isAdmin()" routerLink="/manage-users">
+    <button mat-button *ngIf="isAdmin()" routerLink="/manage-users">
       <mat-icon>people</mat-icon>
-      Manage Auth
+      Manage Users
     </button>
     <button mat-button routerLink="/operations">
       <mat-icon>gamepad</mat-icon>
@@ -32,7 +32,7 @@
   </button>
   <button mat-menu-item *ngIf="isAdmin()" routerLink="/manage-users">
     <mat-icon>people</mat-icon>
-    Manage Auth
+    Manage Users
   </button>
   <button mat-menu-item routerLink="/operations">
     <mat-icon>gamepad</mat-icon>
