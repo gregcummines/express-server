@@ -30,8 +30,12 @@ export class ManageUsersComponent implements OnInit {
      // todo: delete user and notify
   }
 
-  setActive(active: boolean) {
-    // todo: set user active or inactive
-  }
+  setActive(user: User, e: any){
+    if(e.checked){
+        user.active = true; 
+    } else{
+        user.active = false;
+    }
+}
 
 }

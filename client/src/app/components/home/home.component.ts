@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommandCenterService } from './command-center.service';
-import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { SensorMessage } from './sensor-message';
 import { RxSocketClientSubject } from './rx-socket-client.subject';
 import { environment } from '@environments/environment';

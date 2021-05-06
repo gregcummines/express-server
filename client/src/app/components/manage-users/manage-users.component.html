@@ -23,9 +23,9 @@
                     <span class="detail-label">Email:</span> {{user.email}}
                 </p>
                 <mat-slide-toggle
-                    name="slide_toggle_{{user.id}}"
-                    [(ngModel)]="user.active"
+                    [checked]="user.active"
                     [color]="accent"
+                    (change)="setActive(user, $event)"
                     [disabled]="disabled">
                     {{user.active ? 'Active': 'Inactive'}}
                 </mat-slide-toggle>
