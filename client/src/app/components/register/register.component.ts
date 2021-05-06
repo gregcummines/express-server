@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { StatusComponent } from '../status/status.component';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -21,6 +23,7 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
+    public snackBar: MatSnackBar
   ) {
     this.form = this.fb.group({
       firstName: ['', Validators.required],
@@ -46,10 +49,15 @@ export class RegisterComponent implements OnInit {
         this.authService.register(firstName, lastName, username, password)
         .pipe(first())
         .subscribe({
-            next: () => {
-                // get return url from route parameters or default to '/'
-                const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                this.router.navigate([returnUrl]);
+            next: (user) => {
+                if (user && user.token) {
+                  // get return url from route parameters or default to '/'
+                  const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                  this.router.navigate([returnUrl]);
+                } else {
+                  this.setStatusMessage('User account is pending approval');
+                  this.router.navigate(['/login']);
+                }
             },
             error: error => {
                 this.error = error;
@@ -62,5 +70,15 @@ export class RegisterComponent implements OnInit {
     } else {
       this.formSubmitAttempt = true;
     }
+  }
+
+  setStatusMessage(statusMessage: string) {
+    const snackBar = this.snackBar.openFromComponent(StatusComponent, {
+      data: { 
+        message: statusMessage,
+        preClose: () => {snackBar.dismiss()} 
+      },
+      panelClass: ['blue-snackbar']
+    });
   }
 }

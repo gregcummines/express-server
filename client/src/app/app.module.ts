@@ -17,6 +17,7 @@ import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { fakeBackendProvider } from './_helpers/fake-backend-provider';
 import { ManageUsersComponent } from './components/manage-users/manage-users.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { StatusComponent } from './components/status/status.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     RegisterComponent,
     OperationsComponent,
     ManageUsersComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,
