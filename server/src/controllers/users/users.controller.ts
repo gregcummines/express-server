@@ -21,7 +21,8 @@ export class UsersController implements Controller {
     getAll = (request: express.Request, 
             response: express.Response, 
             next: express.NextFunction) => {
-        response.send(this.usersService.getAll());
+      const users = this.usersService.getAll();  
+      response.send(users);
     } 
 
     register = (request: express.Request, 
