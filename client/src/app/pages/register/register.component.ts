@@ -4,7 +4,7 @@ import { AuthService } from '../../auth/auth.service';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { StatusComponent } from '../status/status.component';
+import { StatusComponent } from '../../components/status/status.component';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',

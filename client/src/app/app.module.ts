@@ -6,17 +6,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { MomentModule } from 'ngx-moment';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { OperationsComponent } from './components/operations/operations.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { OperationsComponent } from './pages/operations/operations.component';
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { fakeBackendProvider } from './_helpers/fake-backend-provider';
-import { ManageUsersComponent } from './components/manage-users/manage-users.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ManageUsersComponent } from './pages/manage-users/manage-users.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { StatusComponent } from './components/status/status.component';
 
 @NgModule({
