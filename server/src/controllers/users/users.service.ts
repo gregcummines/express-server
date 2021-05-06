@@ -45,7 +45,7 @@ export class UsersService {
         return walrusRepository.getUsers();
     }
 
-    public deleteUserById({ id }): void {
+    public deleteUserById(id: number): void {
         const walrusRepository = new WalrusRepository();
         walrusRepository.deleteUserById(id);
     }
