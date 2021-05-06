@@ -29,7 +29,7 @@ export class WalrusRepository {
             const params = [firstName, lastName, email, password, role, active];
             
             const stmt = db.prepare(`
-                INSERT INTO [user] ([last_name], [first_name], [email], [password], [role], [active])
+                INSERT INTO [user] ([first_name], [last_name], [email], [password], [role], [active])
                 VALUES (?,?,?,?,?,?);`);
             stmt.run(...params);
             db.close();

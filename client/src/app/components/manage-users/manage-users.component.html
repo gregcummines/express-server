@@ -1,3 +1,5 @@
+<h1>Manage Users</h1>
+
 <mat-toolbar *ngIf="error" color="warn">
     <span>{{error | json}}</span>
 </mat-toolbar>
@@ -9,7 +11,7 @@
         <mat-card>
             <mat-card-title>
                 <mat-icon class="item-icon" color="accent" aria-hidden="false" aria-label="circle check mark icon">
-                    cloud</mat-icon>
+                    person</mat-icon>
                 {{ user.firstName }} {{ user.lastName }}
             </mat-card-title>
             <div class="detail-options">
@@ -18,9 +20,10 @@
             <mat-card-content>
                 
                 <p>
-                    <span class="detail-label">Email:</span> user.email
+                    <span class="detail-label">Email:</span> {{user.email}}
                 </p>
                 <mat-slide-toggle
+                    name="slide_toggle_{{user.id}}"
                     [(ngModel)]="user.active"
                     [color]="accent"
                     [disabled]="disabled">
