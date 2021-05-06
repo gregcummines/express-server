@@ -44,4 +44,19 @@ export class UsersService {
         const walrusRepository = new WalrusRepository();
         return walrusRepository.getUsers();
     }
+
+    public deleteUserById({ id }): void {
+        const walrusRepository = new WalrusRepository();
+        walrusRepository.deleteUserById(id);
+    }
+
+    public activateUserById({ id }): void {
+        const walrusRepository = new WalrusRepository();
+        walrusRepository.activateUserById(id);
+    }
+
+    public deactivateUserById({ id }): void {
+        const walrusRepository = new WalrusRepository();
+        walrusRepository.activateUserById(id);
+    }
 }

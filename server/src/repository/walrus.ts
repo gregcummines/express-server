@@ -62,7 +62,7 @@ export class WalrusRepository {
                 user.email = userDB.email;
                 user.password = userDB.password;
                 user.role = userDB.role;
-                user.active = userDB.active;
+                user.active = (userDB.active === 1);
             }
             db.close();
         }
@@ -93,6 +93,44 @@ export class WalrusRepository {
         }
         return user;
     } 
+
+    public deleteUserById(id: number): void {
+        const db = new Database(this.dbPath, { verbose: console.log });
+        if (db) {
+            const params = [id];
+            const stmt = db.prepare(`
+                DELETE FROM [user] 
+                WHERE [id] = ?;`);
+            stmt.run(...params);
+            db.close();
+        }
+    }
+
+    public activateUserById(id: number): void {
+        const db = new Database(this.dbPath, { verbose: console.log });
+        if (db) {
+            const params = [id];
+            const stmt = db.prepare(`
+                UPDATE [user] 
+                SET [active] = 1
+                WHERE [id] = ?;`);
+            stmt.run(...params);
+            db.close();
+        }
+    }
+
+    public deactivateUserById(id: number): void {
+        const db = new Database(this.dbPath, { verbose: console.log });
+        if (db) {
+            const params = [id];
+            const stmt = db.prepare(`
+                UPDATE [user] 
+                SET [active] = 0
+                WHERE [id] = ?;`);
+            stmt.run(...params);
+            db.close();
+        }
+    }
 
     public getUsers(): User[] {
         let users: User[] = [];

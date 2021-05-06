@@ -16,6 +16,9 @@ export class UsersController implements Controller {
       this.router.get(this.path, authMiddleware, this.getAll);
       this.router.post(`${this.path}/register`, this.register);
       this.router.post(`${this.path}/authenticate`, this.authenticate);
+      this.router.delete(`${this.path}`, authMiddleware, this.deleteUser);
+      this.router.post(`${this.path}/activate`, authMiddleware, this.activateUser);
+      this.router.post(`${this.path}/deactivate`, authMiddleware, this.deactivateUser);
     }
 
     getAll = (request: express.Request, 
@@ -50,4 +53,39 @@ export class UsersController implements Controller {
       response.send(userWithToken); 
     }
     
+    activateUser = (request: express.Request, 
+                    response: express.Response, 
+                    next: express.NextFunction) => {
+      let userWithToken = null;
+      try {
+        this.usersService.activateUserById(request.body);
+      } catch(error) {
+        response.status(401).send('Invalid login credentials');
+      }
+      response.status(200); 
+    }
+
+    deactivateUser = (request: express.Request, 
+                    response: express.Response, 
+                    next: express.NextFunction) => {
+      let userWithToken = null;
+      try {
+        this.usersService.deactivateUserById(request.body);
+      } catch(error) {
+        response.status(401).send('Invalid login credentials');
+      }
+      response.status(200); 
+    }
+
+    deleteUser = (request: express.Request, 
+                  response: express.Response, 
+                  next: express.NextFunction) => {
+      let userWithToken = null;
+      try {
+        this.usersService.deleteUserById(request.body);
+      } catch(error) {
+        response.status(401).send('Invalid login credentials');
+      }
+      response.status(200); 
+    }
 }  
