@@ -20,7 +20,12 @@
                 <p>
                     <span class="detail-label">Email:</span> user.email
                 </p>
-                <p>Active: {{ (user.active === 1) ? 'Yes' : 'No' }}</p>
+                <mat-slide-toggle
+                    [(ngModel)]="user.active"
+                    [color]="accent"
+                    [disabled]="disabled">
+                    {{user.active ? 'Active': 'Inactive'}}
+                </mat-slide-toggle>
                 <p>Role: {{user.role}}</p>
             </mat-card-content>
         </mat-card>
