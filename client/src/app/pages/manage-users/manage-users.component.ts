@@ -28,7 +28,10 @@ export class ManageUsersComponent implements OnInit {
   }
 
   onDelete(id: number) {
-     // todo: delete user and notify
+     this.userService.deleteById(id).subscribe();
+     this.users.forEach((element,index)=>{
+      if(element.id === id) delete this.users[index];
+   });
   }
 
   setActive(user: User, $event: MatSlideToggleChange){

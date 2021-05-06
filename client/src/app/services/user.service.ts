@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
@@ -14,5 +14,9 @@ export class UserService {
 
     getById(id: number) {
         return this.http.get<User>(`/users/${id}`);
+    }
+
+    deleteById(id: number) {
+        return this.http.delete(`/users/${id}`);
     }
 }

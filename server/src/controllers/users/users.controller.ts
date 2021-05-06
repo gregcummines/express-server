@@ -16,7 +16,7 @@ export class UsersController implements Controller {
       this.router.get(this.path, authMiddleware, this.getAll);
       this.router.post(`${this.path}/register`, this.register);
       this.router.post(`${this.path}/authenticate`, this.authenticate);
-      this.router.delete(`${this.path}`, authMiddleware, this.deleteUser);
+      this.router.delete(`${this.path}/:id`, authMiddleware, this.deleteUser);
       this.router.post(`${this.path}/activate`, authMiddleware, this.activateUser);
       this.router.post(`${this.path}/deactivate`, authMiddleware, this.deactivateUser);
     }
@@ -82,7 +82,7 @@ export class UsersController implements Controller {
                   next: express.NextFunction) => {
       let userWithToken = null;
       try {
-        this.usersService.deleteUserById(request.body);
+        this.usersService.deleteUserById(+request.params.id);
       } catch(error) {
         response.status(401).send('Invalid login credentials');
       }
