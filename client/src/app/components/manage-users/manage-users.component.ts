@@ -10,14 +10,20 @@ import { UserService } from '../../services/user.service';
 export class ManageUsersComponent implements OnInit {
   loading = false;
   users: User[] = [];
+  error: string;
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.loading = true;
-        this.userService.getAll().subscribe(users => {
+        this.userService.getAll().subscribe(
+          users => {
             this.loading = false;
             this.users = users;
-        });
+          },
+          error => {
+            this.error = error;
+          }
+        );
   }
 
 }
