@@ -2,14 +2,27 @@
     <span>{{error | json}}</span>
 </mat-toolbar>
 
-<div class="card mt-4">
-    <h4 class="card-header">Manage Users</h4>
-    <div class="card-body">
-        <p>This page can be accessed <u>only by administrators</u>.</p>
-        <p class="mb-1">All users from secure (admin only) api end point:</p>
-        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-        <ul *ngIf="users">
-            <li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>
-        </ul>
+<mat-progress-bar *ngIf="users.length === 0" mode="query"></mat-progress-bar>
+
+<div class="all-items">
+    <div *ngFor="let user of users;">
+        <mat-card>
+            <mat-card-title>
+                <mat-icon class="item-icon" color="accent" aria-hidden="false" aria-label="circle check mark icon">
+                    cloud</mat-icon>
+                {{ user.firstName }} {{ user.lastName }}
+            </mat-card-title>
+            <div class="detail-options">
+                <mat-icon class="item-icon icon-clickable" title="Delete user" color="warn" (click)="onDelete(user.id)">delete</mat-icon>
+            </div>
+            <mat-card-content>
+                
+                <p>
+                    <span class="detail-label">Email:</span> user.email
+                </p>
+                <p>Active: {{ (user.active === 1) ? 'Yes' : 'No' }}</p>
+                <p>Role: {{user.role}}</p>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>

@@ -2,22 +2,22 @@
     padding-left: 5px;
   }
   
-  .all-sensors {
+  .all-items {
       text-align: center;
   }
   
-  .all-sensors h1 {
+  .all-items h1 {
       margin-top: 1em;
   }
   
-  .all-sensors mat-card {
+  .all-items mat-card {
       width: 80%;
       margin: 1em auto;
       text-align: left;
   
   }
   
-  .sensor-icon {
+  .item-icon {
       vertical-align: middle;
       padding-bottom: 3px;
       font-weight: 600;

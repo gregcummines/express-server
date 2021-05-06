@@ -4,16 +4,16 @@
 
 <mat-progress-bar *ngIf="sensors.length === 0" mode="query"></mat-progress-bar>
 
-<div class="all-sensors">
+<div class="all-items">
     <div *ngFor="let sensor of sensors; let i = index">
         <mat-card>
             <mat-card-title>
-                <mat-icon class="sensor-icon" color="accent" aria-hidden="false" aria-label="circle check mark icon">
+                <mat-icon class="item-icon" color="accent" aria-hidden="false" aria-label="circle check mark icon">
                     cloud</mat-icon>
                 {{ sensor.content }}
             </mat-card-title>
             <div class="detail-options">
-                <mat-icon class="sensor-icon icon-clickable" title="Refresh" color="warn" (click)="onRefresh(i)">refresh</mat-icon>
+                <mat-icon class="item-icon icon-clickable" title="Refresh" color="warn" (click)="onRefresh(i)">refresh</mat-icon>
             </div>
             <mat-card-content>
                 <p>

@@ -26,4 +26,12 @@ export class ManageUsersComponent implements OnInit {
         );
   }
 
+  onDelete(id: number) {
+     // todo: delete user and notify
+  }
+
+  setActive(active: boolean) {
+    // todo: set user active or inactive
+  }
+
 }
