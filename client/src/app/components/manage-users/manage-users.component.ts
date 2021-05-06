@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { User } from '@app/models/user';
 import { UserService } from '../../services/user.service';
 
@@ -30,12 +31,11 @@ export class ManageUsersComponent implements OnInit {
      // todo: delete user and notify
   }
 
-  setActive(user: User, e: any){
-    if(e.checked){
-        user.active = true; 
+  setActive(user: User, $event: MatSlideToggleChange){
+    if($event.checked){
+        user.active = 1; 
     } else{
-        user.active = false;
+        user.active = 0;
     }
-}
-
+  }
 }

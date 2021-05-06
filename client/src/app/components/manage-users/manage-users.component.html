@@ -21,7 +21,7 @@
                     <span class="detail-label">Email:</span> {{user.email}}
                 </p>
                 <mat-slide-toggle
-                    [checked]="user.active"
+                    [checked]="user.active === 1"
                     [color]="accent"
                     (change)="setActive(user, $event)"
                     [disabled]="disabled">
