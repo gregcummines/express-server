@@ -39,10 +39,10 @@ export class ManageUsersComponent implements OnInit {
 
   setActive(user: User, $event: MatSlideToggleChange){
     if($event.checked){
-      this.userService.setActive(id).subscribe();
+      this.userService.setActive(user.id).subscribe();
       user.active = 1; 
     } else{
-      this.userService.setInactive(id).subscribe();
+      this.userService.setInactive(user.id).subscribe();
       user.active = 0;
     }
   }
