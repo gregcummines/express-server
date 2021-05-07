@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { Router } from '@angular/router';
+import { AuthService } from '@app/auth/auth.service';
 import { User } from '@app/models/user';
 import { UserService } from '../../services/user.service';
 
@@ -12,7 +14,11 @@ export class ManageUsersComponent implements OnInit {
   loading = false;
   users: User[] = [];
   error: string;
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -31,6 +37,19 @@ export class ManageUsersComponent implements OnInit {
     this.userService.deleteById(id).subscribe();
     const index: number = this.users.findIndex((element) => element.id === id);
     this.users.splice(index, 1);
+
+    // If this is the current user, delete the JWT 
+    if (this.authService.currentUserValue.id === id) {
+      this.authService.delete();
+    }
+
+    // If there are no users, navigate to the register route
+    // OR
+    // If the current user is deleted, navigate to register route
+    if (this.users.length === 0 ||
+      this.authService.currentUserValue.id === id) {
+      this.router.navigate(['/register']);
+    }
   }
 
   trackByFn(i: number) { 

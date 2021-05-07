@@ -59,4 +59,9 @@ export class AuthService {
         this.currentUserSubject.next(null);
         this.router.navigate(['/login']);
     }
+
+    delete() {
+        localStorage.removeItem('currentUser');
+        this.currentUserSubject.next(null);
+    }
 }
