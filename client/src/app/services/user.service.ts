@@ -19,4 +19,12 @@ export class UserService {
     deleteById(id: number) {
         return this.http.delete(`/users/${id}`);
     }
+
+    setActive(id: number) {
+        return this.http.post(`/users/activate/${id}`, null);
+    }
+
+    setInactive(id: number) {
+        return this.http.post(`/users/deactivate/${id}`, null);
+    }
 }

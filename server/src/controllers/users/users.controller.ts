@@ -58,7 +58,7 @@ export class UsersController implements Controller {
                     next: express.NextFunction) => {
       let userWithToken = null;
       try {
-        this.usersService.activateUserById(request.body);
+        this.usersService.activateUserById(+request.params.id);
       } catch(error) {
         response.status(401).send('Invalid login credentials');
       }
@@ -70,7 +70,7 @@ export class UsersController implements Controller {
                     next: express.NextFunction) => {
       let userWithToken = null;
       try {
-        this.usersService.deactivateUserById(request.body);
+        this.usersService.deactivateUserById(+request.params.id);
       } catch(error) {
         response.status(401).send('Invalid login credentials');
       }

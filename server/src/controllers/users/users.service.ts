@@ -50,12 +50,12 @@ export class UsersService {
         walrusRepository.deleteUserById(id);
     }
 
-    public activateUserById({ id }): void {
+    public activateUserById(id: number): void {
         const walrusRepository = new WalrusRepository();
         walrusRepository.activateUserById(id);
     }
 
-    public deactivateUserById({ id }): void {
+    public deactivateUserById(id: number): void {
         const walrusRepository = new WalrusRepository();
         walrusRepository.activateUserById(id);
     }
