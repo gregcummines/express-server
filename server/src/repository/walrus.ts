@@ -31,10 +31,9 @@ export class WalrusRepository {
             const stmt = db.prepare(`
                 INSERT INTO [user] ([first_name], [last_name], [email], [password], [role], [active])
                 VALUES (?,?,?,?,?,?);`);
-            stmt.run(...params, function (err) {  
-                if (err) throw err;
-                user.id = this.lastID;
-              });
+            const runResult: Database.RunResult = stmt.run(...params);
+            user.id = +runResult.lastInsertRowid.toString();
+              
             db.close();
 
             user.firstName = firstName;

@@ -34,11 +34,11 @@ export class UsersController implements Controller {
       let userWithToken = null;
       try {
         userWithToken = this.usersService.register(request.body);
+        response.send(userWithToken);   
       } catch(error) {
         console.log(error);
         response.status(401).send('Invalid login credentials');
       }
-      response.send(userWithToken);    
     }
 
     authenticate = (request: express.Request, 
@@ -47,10 +47,10 @@ export class UsersController implements Controller {
       let userWithToken = null;
       try {
         userWithToken = this.usersService.authenticate(request.body);
+        response.send(userWithToken); 
       } catch(error) {
         response.status(401).send('Invalid login credentials');
       }
-      response.send(userWithToken); 
     }
     
     activateUser = (request: express.Request, 
