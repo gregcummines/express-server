@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import { first } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { StatusComponent } from '../../components/status/status.component';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   form: FormGroup;
   public loginInvalid = false;
   private formSubmitAttempt = false;
@@ -31,6 +31,10 @@ export class RegisterComponent implements OnInit {
       username: ['', Validators.email],
       password: ['', Validators.required]
     });
+  }
+
+  ngOnDestroy(): void {
+    this.snackBar.dismiss();
   }
 
   ngOnInit(): void {
