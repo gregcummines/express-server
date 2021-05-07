@@ -28,10 +28,13 @@ export class ManageUsersComponent implements OnInit {
   }
 
   onDelete(id: number) {
-     this.userService.deleteById(id).subscribe();
-     this.users.forEach((element,index)=>{
-      if(element.id === id) delete this.users[index];
-   });
+    this.userService.deleteById(id).subscribe();
+    const index: number = this.users.findIndex((element) => element.id === id);
+    this.users.splice(index, 1);
+  }
+
+  trackByFn(i: number) { 
+    return i;
   }
 
   setActive(user: User, $event: MatSlideToggleChange){

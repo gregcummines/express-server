@@ -5,7 +5,7 @@
 <mat-progress-bar *ngIf="users.length === 0" mode="query"></mat-progress-bar>
 
 <div class="all-items">
-    <div *ngFor="let user of users;">
+    <div *ngFor="let user of users; let i = index; trackBy: trackByFn">
         <mat-card>
             <mat-card-title>
                 <mat-icon class="item-icon" color="black" aria-hidden="false" aria-label="circle check mark icon">
