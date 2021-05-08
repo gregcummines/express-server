@@ -1,4 +1,4 @@
-import PostNotFoundException from '../../exceptions/PostNotFoundException';
+import PostNotFoundException from '../../exceptions/http/PostNotFoundException';
 import * as express from 'express';
 import Controller from '../../interfaces/controller.interface';
 import Post from './post.interface';

@@ -2,6 +2,7 @@ import * as express from 'express';
 import authMiddleware from '../../middleware/auth.middleware';
 import Controller from '../../interfaces/controller.interface';
 import { UsersService } from './users.service';
+import UserAlreadyExistsException from 'exceptions/internal/UserAlreadyExistsException';
 export class UsersController implements Controller {
     private usersService: UsersService = new UsersService();
     
@@ -36,8 +37,12 @@ export class UsersController implements Controller {
         userWithToken = this.usersService.register(request.body);
         response.send(userWithToken);   
       } catch(error) {
-        console.log(error);
-        response.status(401).send('Invalid login credentials');
+        if (error instanceof UserAlreadyExistsException) {
+          response.status(409).send('User already exists');
+        } else {
+          console.log(error);
+          response.status(401).send('Invalid login credentials');
+        }
       }
     }
 

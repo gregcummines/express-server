@@ -3,6 +3,7 @@ import { WalrusRepository } from '../../repository/walrus';
 import { User } from '../../interfaces/user';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../../interfaces/role';
+import UserAlreadyExistsException from 'exceptions/internal/UserAlreadyExistsException';
 export class UsersService {
 
     public authenticate({ username, password }): User {
@@ -25,6 +26,11 @@ export class UsersService {
 
     public register({ firstName, lastName, username, password }): User {
         const walrusRepository = new WalrusRepository();
+        const existingUser = walrusRepository.getUser(username);
+        if (existingUser) {
+            throw new UserAlreadyExistsException();
+        } 
+
         const passwordHash = bcrypt.hashSync(password, 10);
         const user = walrusRepository.addUser(
                 firstName, 

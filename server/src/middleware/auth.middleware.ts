@@ -1,8 +1,8 @@
 import { NextFunction, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { WalrusRepository } from '../repository/walrus';
-import AuthenticationTokenMissingException from '../exceptions/AuthenticationTokenMissingException';
-import WrongAuthenticationTokenException from '../exceptions/WrongAuthenticationTokenException';
+import AuthenticationTokenMissingException from '../exceptions/http/AuthenticationTokenMissingException';
+import WrongAuthenticationTokenException from '../exceptions/http/WrongAuthenticationTokenException';
 import DataStoredInToken from '../interfaces/dataStoredInToken';
 import RequestWithUser from '../interfaces/requestWithUser.interface';
 
