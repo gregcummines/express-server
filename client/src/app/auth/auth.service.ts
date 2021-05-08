@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators'
@@ -34,6 +34,16 @@ export class AuthService {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
                     return user;
+                }),
+                catchError(error => {
+                    let errorMsg: string;
+                    if (error.error instanceof ErrorEvent) {
+                        errorMsg = `Error: ${error.error.message}`;
+                    } else {
+                        errorMsg = this.getServerErrorMessage(error);
+                    }
+
+                    return throwError(errorMsg);
                 })
             );
     }
@@ -49,6 +59,16 @@ export class AuthService {
                         this.currentUserSubject.next(user);
                     }
                     return user;
+                }),
+                catchError(error => {
+                    let errorMsg: string;
+                    if (error.error instanceof ErrorEvent) {
+                        errorMsg = `Error: ${error.error.message}`;
+                    } else {
+                        errorMsg = this.getServerErrorMessage(error);
+                    }
+
+                    return throwError(errorMsg);
                 })
             );
     }
@@ -63,5 +83,23 @@ export class AuthService {
     delete() {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+    }
+
+    private getServerErrorMessage(error: HttpErrorResponse): string {
+        switch (error.status) {
+            case 404: {
+                return `Not Found: ${error.message}`;
+            }
+            case 403: {
+                return `Access Denied: ${error.message}`;
+            }
+            case 500: {
+                return `Internal Server Error: ${error.message}`;
+            }
+            default: {
+                return `Unknown Server Error: ${error.message}`;
+            }
+
+        }
     }
 }
