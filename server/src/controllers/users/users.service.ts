@@ -3,7 +3,7 @@ import { WalrusRepository } from '../../repository/walrus';
 import { User } from '../../interfaces/user';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../../interfaces/role';
-import UserAlreadyExistsException from 'exceptions/internal/UserAlreadyExistsException';
+import UserAlreadyExistsException from '../../exceptions/internal/UserAlreadyExistsException';
 export class UsersService {
 
     public authenticate({ username, password }): User {

@@ -2,7 +2,7 @@ import * as express from 'express';
 import authMiddleware from '../../middleware/auth.middleware';
 import Controller from '../../interfaces/controller.interface';
 import { UsersService } from './users.service';
-import UserAlreadyExistsException from 'exceptions/internal/UserAlreadyExistsException';
+import UserAlreadyExistsException from '../../exceptions/internal/UserAlreadyExistsException';
 export class UsersController implements Controller {
     private usersService: UsersService = new UsersService();
     
