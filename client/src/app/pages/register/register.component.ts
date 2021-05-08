@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                   this.router.navigate([returnUrl]);
                 } else {
                   this.setStatusMessage('User account is pending approval');
-                  this.router.navigate(['/login']);
+                  //this.router.navigate(['/login']);
                 }
             },
             error: error => {
