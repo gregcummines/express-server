@@ -17,8 +17,8 @@ export class UsersController implements Controller {
       this.router.post(`${this.path}/register`, this.register);
       this.router.post(`${this.path}/authenticate`, this.authenticate);
       this.router.delete(`${this.path}/:id`, authMiddleware, this.deleteUser);
-      this.router.post(`${this.path}/activate`, authMiddleware, this.activateUser);
-      this.router.post(`${this.path}/deactivate`, authMiddleware, this.deactivateUser);
+      this.router.post(`${this.path}/activate/:id`, authMiddleware, this.activateUser);
+      this.router.post(`${this.path}/deactivate/:id`, authMiddleware, this.deactivateUser);
     }
 
     getAll = (request: express.Request, 
