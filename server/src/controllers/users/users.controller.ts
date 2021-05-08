@@ -59,10 +59,10 @@ export class UsersController implements Controller {
       let userWithToken = null;
       try {
         this.usersService.activateUserById(+request.params.id);
+        response.status(200).send();
       } catch(error) {
         response.status(401).send('Invalid login credentials');
-      }
-      response.status(200); 
+      } 
     }
 
     deactivateUser = (request: express.Request, 
@@ -71,10 +71,11 @@ export class UsersController implements Controller {
       let userWithToken = null;
       try {
         this.usersService.deactivateUserById(+request.params.id);
+        response.status(200).send(); 
       } catch(error) {
         response.status(401).send('Invalid login credentials');
       }
-      response.status(200); 
+      
     }
 
     deleteUser = (request: express.Request, 
@@ -83,9 +84,10 @@ export class UsersController implements Controller {
       let userWithToken = null;
       try {
         this.usersService.deleteUserById(+request.params.id);
+        response.status(200).send();
       } catch(error) {
         response.status(401).send('Invalid login credentials');
       }
-      response.status(200); 
+       
     }
 }  
