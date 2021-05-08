@@ -47,7 +47,11 @@ export class UsersController implements Controller {
       let userWithToken = null;
       try {
         userWithToken = this.usersService.authenticate(request.body);
-        response.send(userWithToken); 
+        if (userWithToken.token) {
+          response.send(userWithToken);
+        } else {
+          response.status(401).send('Account not activated');
+        } 
       } catch(error) {
         response.status(401).send('Invalid login credentials');
       }
@@ -87,7 +91,6 @@ export class UsersController implements Controller {
         response.status(200).send();
       } catch(error) {
         response.status(401).send('Invalid login credentials');
-      }
-       
+      }  
     }
 }  

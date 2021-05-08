@@ -18,7 +18,7 @@ import { fakeBackendProvider } from './_helpers/fake-backend-provider';
 import { ManageUsersComponent } from './pages/manage-users/manage-users.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { StatusComponent } from './components/status/status.component';
-
+import { LoadingInterceptor } from './interceptors/loading-interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +48,7 @@ import { StatusComponent } from './components/status/status.component';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
 
     // provider used to create fake backend
     //fakeBackendProvider

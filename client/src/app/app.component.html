@@ -48,4 +48,6 @@
   </button>
 </mat-menu>
 
+<mat-progress-bar *ngIf="loadingService.isLoading$ | async" mode="query"></mat-progress-bar>
+
 <router-outlet></router-outlet>

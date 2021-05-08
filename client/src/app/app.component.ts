@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { Role } from './models/role';
 import { User } from './models/user';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
   }
 
   constructor(
+    public loadingService: LoadingService,
     private authService: AuthService
   ) { 
     this.authService.currentUser.subscribe(x => this.currentUser = x);
