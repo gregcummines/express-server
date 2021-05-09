@@ -24,8 +24,8 @@ export class WebSocketServer {
     console.log("Setting up websocket server...");
     this.wss = wss;
 
-    wss.on('connection', function (ws: WebSocket) {
-        console.log(`Client connect via websocket: ${ws.url}`);
+    wss.on('connection', function (ws: WebSocket, req: IncomingMessage) {
+        console.log(`Client connect via websocket: ${req.url}`);
         ws.send(self.getSensorStatuses());
         const id = setInterval(function () {
           ws.send(self.getSensorStatuses(), function () {

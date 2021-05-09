@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   ) { 
     let authToken = this.authService.currentUserValue.token;
     this.socket$ = new RxSocketClientSubject({
-      url: `ws://${environment.apiUrl}/authToken`,
+      url: `ws://${environment.apiUrl}/${authToken}`,
       reconnectAttempts: 604800,  
       reconnectInterval: 5000
     });
