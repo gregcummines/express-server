@@ -63,6 +63,6 @@ export class UsersService {
 
     public deactivateUserById(id: number): void {
         const walrusRepository = new WalrusRepository();
-        walrusRepository.activateUserById(id);
+        walrusRepository.deactivateUserById(id);
     }
 }
