@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators'
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
+import { Role } from '@app/models/role';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -23,6 +24,10 @@ export class AuthService {
 
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
+    }
+
+    public getRole(): Role {
+        return this.currentUserValue.role;
     }
 
     login(username: string, password: string) {
