@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, CanDeactivate, CanLoad, UrlTree, Route, UrlSegment } from '@angular/router';
+import { Role } from '@app/models/role';
 import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
@@ -38,7 +39,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
         if (this.authService.isLoggedIn()) {
             const userRole = this.authService.getRole();
             // If the user role is not associated with this route's role, navigate to login
-            if (route.data.role && route.data.role.indexOf(userRole) === -1) {
+            // unless the role is Admin in which case user can go anywhere
+            if (route.data.role && (route.data.role.indexOf(userRole) === -1 || userRole === Role.Admin)) {
                 this.router.navigate(['/login']);
                 return false;
             }
