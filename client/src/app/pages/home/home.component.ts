@@ -4,6 +4,7 @@ import { SensorMessage } from './sensor-message';
 import { RxSocketClientSubject } from './rx-socket-client.subject';
 import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '@app/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,9 +13,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   loaded: boolean = false;
-  constructor(private commandCenterService: CommandCenterService, private http: HttpClient) { 
+  constructor(
+    private commandCenterService: CommandCenterService,
+    private http: HttpClient,
+    private authService: AuthService
+  ) { 
+    let authToken = this.authService.currentUserValue.token;
     this.socket$ = new RxSocketClientSubject({
-      url: `ws://${environment.apiUrl}`,
+      url: `ws://${environment.apiUrl}/authToken`,
       reconnectAttempts: 604800,  
       reconnectInterval: 5000
     });

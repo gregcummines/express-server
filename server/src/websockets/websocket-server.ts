@@ -24,7 +24,8 @@ export class WebSocketServer {
     console.log("Setting up websocket server...");
     this.wss = wss;
 
-    wss.on('connection', function (ws) {
+    wss.on('connection', function (ws: WebSocket) {
+        console.log(`Client connect via websocket: ${ws.url}`);
         ws.send(self.getSensorStatuses());
         const id = setInterval(function () {
           ws.send(self.getSensorStatuses(), function () {
@@ -33,8 +34,7 @@ export class WebSocketServer {
             //
           });
         }, 5000);
-        console.log('started client interval');
-      
+        
         ws.on('close', function () {
           console.log('stopping client interval');
           clearInterval(id);
@@ -52,13 +52,6 @@ export class WebSocketServer {
         sensorMessages.push(new SensorMessage(sensor.id, "temp", `${sensor.t.toString()}F`, new Date()));
     });
     return JSON.stringify(sensorMessages);
-  }
-
-  broadcastSensorsStatus(): void {
-    this.wss.clients
-        .forEach(client => {
-            client.send(this.getSensorStatuses());
-        });
   }
 
   startMonitoringTemperatures() {
