@@ -4,8 +4,9 @@ import { SensorMessage } from './sensor-message';
 import { readAllF, ValueWithID } from "ds18b20-raspi-typescript";
 import { IncomingMessage } from "node:http";
 import * as nodecron from 'node-cron';
-import { createConnection } from "node:net";
-
+import * as jwt from 'jsonwebtoken';
+import { WalrusRepository } from '../repository/walrus';
+import DataStoredInToken from "../interfaces/dataStoredInToken";
 interface CustomSocket extends WebSocket {
     isAlive: boolean
 }
@@ -26,19 +27,29 @@ export class WebSocketServer {
 
     wss.on('connection', function (ws: WebSocket, req: IncomingMessage) {
         console.log(`Client connect via websocket: ${req.url}`);
-        ws.send(self.getSensorStatuses());
-        const id = setInterval(function () {
-          ws.send(self.getSensorStatuses(), function () {
-            //
-            // Ignore errors.
-            //
+        const secret = process.env["WALRUS_JWT_SECRET_KEY"];
+        const token = req.url.substring(req.url.lastIndexOf('/') + 1);
+        const verificationResponse = jwt.verify(token, secret) as DataStoredInToken;
+        const id = verificationResponse.id;
+        const walrusRepository = new WalrusRepository();
+        const user = walrusRepository.getUserById(id);
+        if (user) {
+          ws.send(self.getSensorStatuses());
+          const id = setInterval(function () {
+            ws.send(self.getSensorStatuses(), function () {
+              //
+              // Ignore errors.
+              //
+            });
+          }, 5000);
+
+          ws.on('close', function () {
+            console.log('stopping client interval');
+            clearInterval(id);
           });
-        }, 5000);
-        
-        ws.on('close', function () {
-          console.log('stopping client interval');
-          clearInterval(id);
-        });
+        } else {
+          ws.close();
+        }
       });
   }
 
