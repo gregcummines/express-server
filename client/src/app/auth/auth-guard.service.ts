@@ -38,9 +38,13 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     checkUserLogin(route: ActivatedRouteSnapshot, url: any): boolean {
         if (this.authService.isLoggedIn()) {
             const userRole = this.authService.getRole();
+            // If user has Admin role, implicit use of any route is approved
+            if (userRole === Role.Admin) {
+                return true;
+            }
+
             // If the user role is not associated with this route's role, navigate to login
-            // unless the role is Admin in which case user can go anywhere
-            if (route.data.role && (route.data.role.indexOf(userRole) === -1 || userRole === Role.Admin)) {
+            if (route.data.role && route.data.role.indexOf(userRole) === -1) {
                 this.router.navigate(['/login']);
                 return false;
             }
