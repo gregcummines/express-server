@@ -27,6 +27,8 @@ export class WebSocketServer {
 
     wss.on('connection', function (ws: WebSocket, req: IncomingMessage) {
         console.log(`Client connect via websocket: ${req.url}`);
+        
+        // Authenticate websocket client using JWT in the URL        
         const secret = process.env["WALRUS_JWT_SECRET_KEY"];
         const token = req.url.substring(req.url.lastIndexOf('/') + 1);
         const verificationResponse = jwt.verify(token, secret) as DataStoredInToken;
