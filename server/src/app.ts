@@ -9,7 +9,7 @@ import * as http from 'http';
 import * as cors from 'cors';
 import * as path from 'path';
 import * as morgan from 'morgan';
-
+import * as compression from 'compression';
 class App {
   public app: express.Application;
   public port: number;
@@ -38,12 +38,16 @@ class App {
   }
  
   private initializeMiddlewares() {
+    let compressionOptions: compression.CompressionOptions = {
+      filter: shouldCompress
+    };
+    this.app.use(compression(compressionOptions));
     this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(cors());
     this.app.use(express.static(`${this.angularDistPath}`));
   }
- 
+
   private initializeErrorHandling() {
     this.app.use(errorMiddleware);
   }
@@ -79,5 +83,15 @@ class App {
     });
   }
 }
+
+function shouldCompress (req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+  }
  
+  // fallback to standard filter function
+  return compression.filter(req, res)
+}
+
 export default App;
